@@ -1,0 +1,9 @@
+# Binary
+/bin/*
+/tf2report
+
+# Examples
+/examples/*
+
+# Config
+/tf2report.yaml
