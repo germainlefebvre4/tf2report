@@ -7,3 +7,6 @@
 
 # Config
 /tf2report.yaml
+
+# Release
+/dist/*

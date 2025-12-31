@@ -101,6 +101,25 @@ release: clean
 	GOOS=darwin GOARCH=arm64 $(GOBUILD) $(GOFLAGS) -ldflags "$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME)-darwin-arm64 ./$(CMD_DIR)
 	GOOS=windows GOARCH=amd64 $(GOBUILD) $(GOFLAGS) -ldflags "$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME)-windows-amd64.exe ./$(CMD_DIR)
 
+# Docker build and push
+docker-build:
+	@echo "Building Docker image..."
+	docker build -t germainlefebvre4/tf2report:dev --no-cache .
+	@echo "Docker image built: tf2report:dev"
+
+#
+docker-build-push: docker-build
+	docker push germainlefebvre4/tf2report:dev
+	@echo "Docker image pushed: germainlefebvre4/tf2report:dev"
+
+# Goreleaser targets
+goreleaser-check:
+	goreleaser check
+
+# Goreleaser release (snapshot)
+goreleaser-release:
+	goreleaser release --snapshot --clean
+
 # Help target
 .PHONY: help
 help:

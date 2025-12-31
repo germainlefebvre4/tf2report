@@ -11,13 +11,13 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./main.go
+  - main: ./cmd/tf2report/main.go
     env:
       - CGO_ENABLED=0
     goos:
       - linux
       # - windows
-      # - darwin
+      - darwin
 
 archives:
   - formats: "tar.gz"
