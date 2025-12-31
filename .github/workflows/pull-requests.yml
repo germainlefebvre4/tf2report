@@ -34,13 +34,15 @@ jobs:
 
       - name: Build
         run: |
-          go build -v -ldflags="-X 'github.com/germainlefebvre4/tf2report/cmd.appVersion=${{ github.sha }}'" -o tf2report ./main.go
+          make build
           echo "Build completed."
+        env:
+          VERSION: ${{ github.sha }}
 
       - name: Test with the Go CLI
         run: go test ./...
 
       - name: Test with tf2report
         run: |
-          ./tf2report --version
-          ./tf2report --help
+          ./bin/tf2report --version
+          ./bin/tf2report --help
