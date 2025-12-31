@@ -28,7 +28,7 @@ filters:
     - aws_instance
     - aws_s3_bucket
     - aws_security_group
-  
+
   # Filter by actions (empty array means no filtering)
   # Valid values: create, update, delete, replace
   actions:

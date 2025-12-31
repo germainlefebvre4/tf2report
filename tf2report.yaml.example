@@ -11,7 +11,7 @@ output_format: markdown
 filters:
   # Filter by resource types (empty array means no filtering)
   resource_types: []
-  
+
   # Filter by actions (empty array means no filtering)
   # Valid values: create, update, delete, replace
   actions: []
