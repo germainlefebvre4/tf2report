@@ -18,6 +18,8 @@ builds:
       - linux
       # - windows
       - darwin
+    ldflags:
+      - -s -w -X 'main.appVersion={{.Version}}' -X 'main.buildCommit={{.Commit}}' -X 'main.buildTime={{.CommitDate}}'
 
 archives:
   - formats: "tar.gz"
