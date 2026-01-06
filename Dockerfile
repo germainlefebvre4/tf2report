@@ -2,7 +2,7 @@ FROM alpine:3 AS build
 
 ARG DISTRIBUTION=linux
 ARG CPU_ARCH=amd64
-ARG TF2REPORT_VERSION=v0.1.0
+ARG TF2REPORT_VERSION=0.1.0
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN apk update && \
 
 RUN curl -L --retry 5 --retry-delay 2 --retry-all-errors \
     --output tf2report.tar.gz \
-    "https://github.com/germainlefebvre4/tf2report/releases/download/${TF2REPORT_VERSION}/tf2report_${DISTRIBUTION}_${CPU_ARCH}.tar.gz" && \
+    "https://github.com/germainlefebvre4/tf2report/releases/download/v${TF2REPORT_VERSION}/tf2report_${DISTRIBUTION}_${CPU_ARCH}.tar.gz" && \
     tar -zxvf tf2report.tar.gz && \
     chmod +x tf2report
 
