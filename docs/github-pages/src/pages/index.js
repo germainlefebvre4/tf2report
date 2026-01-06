@@ -15,7 +15,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p style={{marginTop: '1rem'}}>
-          <img src={useBaseUrl('/img/kuve_logo-transparent.png')} style={{maxWidth: '200px'}} alt="Kuve logo" />
+          <img src={useBaseUrl('/img/tf2report_logo-transparent.png')} style={{maxWidth: '200px'}} alt="TF2Report logo" />
         </p>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>

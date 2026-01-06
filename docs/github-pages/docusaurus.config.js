@@ -46,12 +46,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/tf2report-social-card.png',
+      image: 'img/tf2report_logo-transparent.png',
       navbar: {
         title: 'tf2report',
         logo: {
           alt: 'tf2report Logo',
-          src: 'img/logo.svg',
+          src: 'img/tf2report_logo-transparent.png',
         },
         items: [
           {
