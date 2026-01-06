@@ -145,7 +145,7 @@ tf2report --plan terraform.tfplan.json --format json > report.json
 if [ $? -eq 0 ]; then
   # Success - check for destructive changes
   DESTRUCTIVE=$(jq '.summary.to_destroy + .summary.to_replace' report.json)
-  
+
   if [ "$DESTRUCTIVE" -gt 0 ]; then
     echo "⚠️  WARNING: Destructive changes detected"
     exit 1

@@ -112,9 +112,9 @@ jobs:
             const fs = require('fs');
             const report = fs.readFileSync('report.md', 'utf8');
             const security = fs.readFileSync('security-review.md', 'utf8');
-            
+
             const comment = `## Terraform Plan Report\n\n${report}\n\n## Security Review\n\n${security}`;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -200,7 +200,7 @@ terraform:analyze:
     - cd ${TF_ROOT}
     - tf2report --plan terraform.tfplan.json > report.md
     - tf2report --plan terraform.tfplan.json --format json > report.json
-    
+
     # Check for destructive changes
     - |
       DESTRUCTIVE=$(jq '.summary.to_destroy + .summary.to_replace' report.json)
@@ -234,18 +234,18 @@ terraform:comment:
 ```groovy title="Jenkinsfile"
 pipeline {
     agent any
-    
+
     environment {
         GO_VERSION = '1.25'
     }
-    
+
     stages {
         stage('Setup') {
             steps {
                 sh 'go install github.com/germainlefebvre4/tf2report/cmd/tf2report@latest'
             }
         }
-        
+
         stage('Terraform Plan') {
             steps {
                 sh '''
@@ -255,7 +255,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Generate Reports') {
             steps {
                 sh '''
@@ -264,7 +264,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Check Destructive Changes') {
             steps {
                 script {
@@ -272,7 +272,7 @@ pipeline {
                         script: 'jq ".summary.to_destroy + .summary.to_replace" report.json',
                         returnStdout: true
                     ).trim().toInteger()
-                    
+
                     if (destructive > 0) {
                         echo "WARNING: ${destructive} destructive changes detected"
                         currentBuild.result = 'UNSTABLE'
@@ -280,7 +280,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: '*.md,*.json', fingerprint: true
@@ -339,34 +339,34 @@ jobs:
       - image: cimg/go:1.25
     steps:
       - checkout
-      
+
       - run:
           name: Install Terraform
           command: |
             wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
             unzip terraform_1.10.5_linux_amd64.zip
             sudo mv terraform /usr/local/bin/
-      
+
       - run:
           name: Install tf2report
           command: go install github.com/germainlefebvre4/tf2report/cmd/tf2report@latest
-      
+
       - run:
           name: Terraform Plan
           command: |
             terraform init
             terraform plan -out=tfplan
             terraform show -json tfplan > terraform.tfplan.json
-      
+
       - run:
           name: Generate Report
           command: |
             ~/go/bin/tf2report --plan terraform.tfplan.json > report.md
             ~/go/bin/tf2report --plan terraform.tfplan.json --format json > report.json
-      
+
       - store_artifacts:
           path: report.md
-      
+
       - store_artifacts:
           path: report.json
 

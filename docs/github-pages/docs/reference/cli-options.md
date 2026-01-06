@@ -20,8 +20,8 @@ tf2report [flags]
 
 Path to Terraform plan JSON file.
 
-**Type:** String  
-**Required:** Yes (unless set in config)  
+**Type:** String
+**Required:** Yes (unless set in config)
 **Example:**
 ```bash
 tf2report --plan terraform.tfplan.json
@@ -34,9 +34,9 @@ tf2report -p /path/to/plan.json
 
 Output format.
 
-**Type:** String  
-**Default:** `markdown`  
-**Valid Values:** `markdown`, `text`, `json`  
+**Type:** String
+**Default:** `markdown`
+**Valid Values:** `markdown`, `text`, `json`
 **Example:**
 ```bash
 tf2report --plan plan.json --format markdown
@@ -47,9 +47,9 @@ tf2report --plan plan.json -f text
 
 Filter by resource type (repeatable).
 
-**Type:** String  
-**Default:** None (no filtering)  
-**Repeatable:** Yes  
+**Type:** String
+**Default:** None (no filtering)
+**Repeatable:** Yes
 **Example:**
 ```bash
 tf2report --plan plan.json --type aws_instance
@@ -60,10 +60,10 @@ tf2report --plan plan.json -t aws_instance -t aws_s3_bucket
 
 Filter by action (repeatable).
 
-**Type:** String  
-**Default:** None (no filtering)  
-**Valid Values:** `create`, `update`, `delete`, `replace`  
-**Repeatable:** Yes  
+**Type:** String
+**Default:** None (no filtering)
+**Valid Values:** `create`, `update`, `delete`, `replace`
+**Repeatable:** Yes
 **Example:**
 ```bash
 tf2report --plan plan.json --action create
@@ -74,8 +74,8 @@ tf2report --plan plan.json -a delete -a replace
 
 Path to configuration file.
 
-**Type:** String  
-**Default:** `./tf2report.yaml`  
+**Type:** String
+**Default:** `./tf2report.yaml`
 **Example:**
 ```bash
 tf2report --config /path/to/config.yaml
@@ -86,8 +86,8 @@ tf2report --config prod-config.yaml
 
 Enable verbose output.
 
-**Type:** Boolean  
-**Default:** `false`  
+**Type:** Boolean
+**Default:** `false`
 **Example:**
 ```bash
 tf2report --plan plan.json --verbose
@@ -98,7 +98,7 @@ tf2report --plan plan.json -v
 
 Show help message.
 
-**Type:** Boolean  
+**Type:** Boolean
 **Example:**
 ```bash
 tf2report --help
@@ -109,7 +109,7 @@ tf2report -h
 
 Show version information.
 
-**Type:** Boolean  
+**Type:** Boolean
 **Example:**
 ```bash
 tf2report --version

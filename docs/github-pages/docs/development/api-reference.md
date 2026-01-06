@@ -390,14 +390,14 @@ func main() {
     if err != nil {
         panic(err)
     }
-    
+
     // Parse plan
     parser := terraform.NewParser()
     plan, err := parser.ParseFile(cfg.TerraformPlanPath)
     if err != nil {
         panic(err)
     }
-    
+
     // Apply filters
     changes := plan.ResourceChanges
     if len(cfg.Filters.ResourceTypes) > 0 {
@@ -406,20 +406,20 @@ func main() {
     if len(cfg.Filters.Actions) > 0 {
         changes = terraform.FilterByAction(changes, cfg.Filters.GetActionTypes())
     }
-    
+
     // Update plan with filtered changes
     plan.ResourceChanges = changes
-    
+
     // Generate summary
     summary := terraform.NewSummary(changes)
-    
+
     // Create formatter
     format, _ := report.ParseFormat(cfg.OutputFormat)
     formatter, err := report.NewFormatter(format)
     if err != nil {
         panic(err)
     }
-    
+
     // Generate report
     formatter.Format(plan, summary, os.Stdout)
 }

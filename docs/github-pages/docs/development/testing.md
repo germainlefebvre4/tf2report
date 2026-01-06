@@ -64,11 +64,11 @@ import "testing"
 func TestParseFile(t *testing.T) {
     parser := NewParser()
     plan, err := parser.ParseFile("testdata/sample.json")
-    
+
     if err != nil {
         t.Fatalf("expected no error, got %v", err)
     }
-    
+
     if plan == nil {
         t.Fatal("expected plan, got nil")
     }
@@ -95,7 +95,7 @@ func TestFilterByType(t *testing.T) {
             expected: 1,
         },
     }
-    
+
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
             result := FilterByType(tt.changes, tt.types)

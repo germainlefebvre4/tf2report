@@ -42,9 +42,9 @@ verbosity: string
 
 Path to Terraform plan JSON file.
 
-**Type:** String  
-**Required:** No  
-**Default:** `terraform.tfplan.json`  
+**Type:** String
+**Required:** No
+**Default:** `terraform.tfplan.json`
 **Example:**
 ```yaml
 terraform_plan_path: /path/to/plan.json
@@ -54,10 +54,10 @@ terraform_plan_path: /path/to/plan.json
 
 Output format for reports.
 
-**Type:** String  
-**Required:** No  
-**Default:** `markdown`  
-**Valid Values:** `markdown`, `text`, `json`  
+**Type:** String
+**Required:** No
+**Default:** `markdown`
+**Valid Values:** `markdown`, `text`, `json`
 **Example:**
 ```yaml
 output_format: json
@@ -67,17 +67,17 @@ output_format: json
 
 Resource filtering options.
 
-**Type:** Object  
-**Required:** No  
+**Type:** Object
+**Required:** No
 **Default:** Empty (no filtering)
 
 #### `filters.resource_types`
 
 List of resource types to include.
 
-**Type:** Array of strings  
-**Required:** No  
-**Default:** `[]` (all types included)  
+**Type:** Array of strings
+**Required:** No
+**Default:** `[]` (all types included)
 **Example:**
 ```yaml
 filters:
@@ -91,10 +91,10 @@ filters:
 
 List of actions to include.
 
-**Type:** Array of strings  
-**Required:** No  
-**Default:** `[]` (all actions included)  
-**Valid Values:** `create`, `update`, `delete`, `replace`  
+**Type:** Array of strings
+**Required:** No
+**Default:** `[]` (all actions included)
+**Valid Values:** `create`, `update`, `delete`, `replace`
 **Example:**
 ```yaml
 filters:
@@ -107,10 +107,10 @@ filters:
 
 Logging verbosity level.
 
-**Type:** String  
-**Required:** No  
-**Default:** `info`  
-**Valid Values:** `debug`, `info`, `warn`, `error`  
+**Type:** String
+**Required:** No
+**Default:** `info`
+**Valid Values:** `debug`, `info`, `warn`, `error`
 **Example:**
 ```yaml
 verbosity: debug
@@ -133,7 +133,7 @@ filters:
     - aws_s3_bucket
     - aws_rds_cluster
     - aws_security_group
-  
+
   # Actions to include
   actions:
     - create
