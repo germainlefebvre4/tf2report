@@ -4,6 +4,7 @@
 # Variables
 BINARY_NAME := tf2report
 CMD_DIR := cmd/tf2report
+CMD_MAIN_FILE := $(CMD_DIR)/main.go
 BUILD_DIR := bin
 GO := go
 GOFLAGS := -v
@@ -33,26 +34,31 @@ BUILD_LDFLAGS := $(LDFLAGS) -X 'main.appVersion=$(VERSION)' -X 'main.buildCommit
 .PHONY: build
 build:
 	@echo "Building $(BUILD_DIR)/$(BINARY_NAME)..."
-	$(GO) build -ldflags="$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) cmd/tf2report/main.go
+	$(GO) build -ldflags="$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(CMD_MAIN_FILE)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
 
 # Run tests
 .PHONY: test
 test:
+	@echo "Running tests..."
 	$(GOTEST) -v ./...
 
 # Run tests with coverage
 .PHONY: test-coverage
 test-coverage:
+	@echo "Running tests with coverage..."
 	$(GOTEST) -v -coverprofile=coverage.out ./...
 	$(GOCMD) tool cover -html=coverage.out -o coverage.html
+	@echo "Coverage report generated: coverage.html"
 
 # Clean build artifacts
 .PHONY: clean
 clean:
+	@echo "Cleaning..."
 	$(GOCLEAN)
-	rm -rf $(BUILD_DIR)
-	rm -f coverage.out coverage.html
+	@rm -f $(BUILD_DIR)
+	@rm -f coverage.out coverage.html
+	@echo "Clean complete"
 
 # Install the binary to system path
 .PHONY: install
