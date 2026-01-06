@@ -1,0 +1,20 @@
+# Sample tf2report configuration file
+# Place this file as tf2report.yaml in your project directory
+
+# Path to Terraform plan JSON file
+terraform_plan_path: terraform.tfplan.json
+
+# Output format: markdown, text, or json
+output_format: markdown
+
+# Filters for resource selection
+filters:
+  # Filter by resource types (empty array means no filtering)
+  resource_types: []
+
+  # Filter by actions (empty array means no filtering)
+  # Valid values: create, update, delete, replace
+  actions: []
+
+# Logging verbosity: debug, info, warn, error
+verbosity: info

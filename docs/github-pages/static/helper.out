@@ -1,0 +1,17 @@
+tf2report analyzes Terraform plan files and generates resource change reports.
+
+It parses Terraform plan JSON files, extracts resource changes, and generates
+summaries in multiple output formats including Markdown, plain text, and JSON.
+
+Usage:
+  tf2report [flags]
+
+Flags:
+  -a, --action strings   filter by action (create, update, delete, replace)
+      --config string    config file path (default: ./tf2report.yaml)
+  -f, --format string    output format (markdown, text, json)
+  -h, --help             help for tf2report
+  -p, --plan string      path to Terraform plan JSON file
+  -t, --type strings     filter by resource type (can be specified multiple times)
+  -v, --verbose          verbose output
+      --version          version for tf2report
