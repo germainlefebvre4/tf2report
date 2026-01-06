@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://germainlefebvre4.github.io',
+  url: 'https://tf2report.germainlefebvre.fr',
   // Set the /<baseUrl>/ pathname under which your site is served
   baseUrl: '/',
 
@@ -20,7 +20,6 @@ const config = {
   projectName: 'tf2report',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
@@ -136,6 +135,12 @@ const config = {
         searchPagePath: 'search',
       },
     }),
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 };
 
 module.exports = config;
