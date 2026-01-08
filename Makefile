@@ -35,6 +35,7 @@ BUILD_LDFLAGS := $(LDFLAGS) -X 'main.appVersion=$(VERSION)' -X 'main.buildCommit
 build:
 	@echo "Building $(BUILD_DIR)/$(BINARY_NAME)..."
 	$(GO) build -ldflags="$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(CMD_MAIN_FILE)
+	@chmod +x $(BUILD_DIR)/$(BINARY_NAME)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
 
 # Run tests
