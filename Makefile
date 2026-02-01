@@ -9,7 +9,7 @@ BUILD_DIR := bin
 GO := go
 GOFLAGS := -v
 LDFLAGS := -s -w
-PREFIX ?= /usr/local
+PREFIX ?= ~/.local
 DESTDIR ?=
 
 # Go commands
@@ -65,8 +65,7 @@ clean:
 .PHONY: install
 install: build
 	@echo "Installing $(BINARY_NAME) to $(INSTALL_PATH)..."
-# 	sudo install -d $(DESTDIR)$(PREFIX)/bin
-	sudo install -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(PREFIX)/bin/
 	@echo "Installation complete. Run 'tf2report --help' to get started."
 
 # Uninstall binary from system
