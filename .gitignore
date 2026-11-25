@@ -10,3 +10,10 @@
 
 # Release
 /dist/*
+
+# Planning snapshots (regenerable)
+/docs/planning/repomix.md
+
+# Test coverage output
+/coverage.out
+/coverage.html

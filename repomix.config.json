@@ -1,0 +1,32 @@
+{
+  "$schema": "https://repomix.com/schemas/latest/schema.json",
+  "output": {
+    "filePath": "docs/planning/repomix.md",
+    "style": "markdown",
+    "removeComments": false,
+    "showLineNumbers": false,
+    "topFilesLength": 10
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "bin/**",
+      "dist/**",
+      "examples/**",
+      "go.sum",
+      "CHANGELOG.md",
+      "**/*.tfplan.json",
+      "tf2report.yaml",
+      ".specify/**",
+      ".claude/**",
+      "docs/planning/**",
+      "docs/github-pages/node_modules/**",
+      "docs/github-pages/pnpm-lock.yaml"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  }
+}
