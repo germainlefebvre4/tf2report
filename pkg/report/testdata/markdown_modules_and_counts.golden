@@ -1,0 +1,52 @@
+# Terraform Plan Summary
+
+**Terraform Version:** 1.17.2
+
+## Summary
+
+**Total Changes:** 5
+
+| Action | Count |
+|--------|-------|
+| Add | 3 |
+| Change | 2 |
+
+## Resources by Change Type
+
+### To Add (3)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_s3_bucket` | `logs` |
+| `aws_subnet` | `main` |
+| `aws_subnet` | `main` |
+
+### To Change (2)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_instance` | `web` |
+| `aws_instance` | `web` |
+
+## Changes by Resource Type
+
+### aws_instance (2)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_instance` | `web` | To Change |
+| `aws_instance` | `web` | To Change |
+
+### aws_s3_bucket (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_s3_bucket` | `logs` | To Add |
+
+### aws_subnet (2)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_subnet` | `main` | To Add |
+| `aws_subnet` | `main` | To Add |
+

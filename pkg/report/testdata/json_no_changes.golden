@@ -1,0 +1,12 @@
+{
+  "terraform_version": "1.17.2",
+  "summary": {
+    "total_changes": 0,
+    "to_add": 0,
+    "to_change": 0,
+    "to_destroy": 0,
+    "to_replace": 0
+  },
+  "changes": [],
+  "by_type": {}
+}
