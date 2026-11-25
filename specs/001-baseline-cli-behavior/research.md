@@ -1,7 +1,7 @@
 # Research: Baseline CLI Behavior
 
-All items from the plan's Technical Context are resolved here. Findings come from the Repomix
-snapshot (2026-11-22), the source, and runs of the built binary.
+All items from the plan's Technical Context are resolved here. Findings come from the repository
+source, and runs of the built binary.
 
 ## R-001 Test layers
 

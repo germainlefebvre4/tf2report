@@ -58,11 +58,10 @@ All Technical Context items are resolved; the one open point (which Terraform ve
 | Principle | Status | Evidence |
 |-----------|--------|----------|
 | I. Idiomatic Go and Simplicity | Pass | Tests are plain stdlib Go, formatted with `gofmt`/`goimports`, no `init()` and no globals added (the `-update` flag lives in a test-only `flag.Bool`). No new dependency. |
-| II. Brownfield Context via Repomix | Pass | Snapshot `docs/planning/repomix.md` (generated 2026-11-22, no source change since) was reviewed. Capabilities touched: none modified, all read-only: plan parsing, filters, summary, three formatters, config loading, CLI wiring. |
-| III. Layered Package Architecture | Pass | No production file changes. Tests respect the layering: `pkg/report` tests build `terraform.Plan` values or parse fixtures; no new cross-package dependency in production code. |
-| IV. Test-Backed Changes | Pass (this is the feature) | Table-driven, `t.Run`, success and error paths, malformed and empty plans, golden-pinned output per format, `t.Helper()`/`t.Cleanup()`. |
-| V. Automated Quality Gates | Deviation, tracked | `golangci-lint` 2.15 cannot load the repository's v1-format `.golangci.yml` ("unsupported version of the configuration"), so the gate cannot run. Interim gate: `gofmt -l`, `goimports`, `go vet ./...`, pre-commit hooks. See Complexity Tracking. |
-| VI. Conventional Commits and Automated Releases | Pass | Commits use `test:` / `docs:` / `chore:`; `CHANGELOG.md` untouched. `test:` commits do not trigger a release. |
+| II. Layered Package Architecture | Pass | No production file changes. Tests respect the layering: `pkg/report` tests build `terraform.Plan` values or parse fixtures; no new cross-package dependency in production code. |
+| III. Test-Backed Changes | Pass (this is the feature) | Table-driven, `t.Run`, success and error paths, malformed and empty plans, golden-pinned output per format, `t.Helper()`/`t.Cleanup()`. |
+| IV. Automated Quality Gates | Deviation, tracked | `golangci-lint` 2.15 cannot load the repository's v1-format `.golangci.yml` ("unsupported version of the configuration"), so the gate cannot run. Interim gate: `gofmt -l`, `goimports`, `go vet ./...`, pre-commit hooks. See Complexity Tracking. |
+| V. Conventional Commits and Automated Releases | Pass | Commits use `test:` / `docs:` / `chore:`; `CHANGELOG.md` untouched. `test:` commits do not trigger a release. |
 
 Technology and Delivery Constraints: read-only and offline (tests run only local files); fixtures
 are synthetic; no change to the Makefile contract beyond optional documentation.
@@ -136,7 +135,7 @@ testdata/
 ```
 
 **Structure Decision**: keep tests beside the code they pin (Go convention, Constitution
-Principle IV, `go.instructions.md`). Plan fixtures are shared at the repository root `testdata/`
+Principle III, `go.instructions.md`). Plan fixtures are shared at the repository root `testdata/`
 because the CLI, `pkg/terraform` and `pkg/report` tests need the same plans; `go` ignores
 directories named `testdata` when building. Golden files live with the package that owns the
 format (`pkg/report/testdata`). No production directory or package is added.
@@ -166,12 +165,12 @@ Run `go test -run KnownGap ./...` to list every provisional test.
 ## Constitution Check (post-design)
 
 Re-evaluated after Phase 1: unchanged. The design adds only `_test.go` files, `testdata/` and
-spec documents; no production code, no dependency, no new package. Principle V remains a tracked
+spec documents; no production code, no dependency, no new package. Principle IV remains a tracked
 deviation caused by the pre-existing lint configuration, not by this feature.
 
 ## Complexity Tracking
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| Principle V: `golangci-lint` gate not runnable (pre-existing config in v1 format, tool at 2.15) | The feature must still merge with a quality bar, and migrating the lint config is a separate change (Sync Impact Report TODO `LINT_CI`) | Migrating `.golangci.yml` here would mix a tooling change into a test-only feature and could force production edits to satisfy new linters, contradicting FR-016 "no application change". Interim gate (`gofmt`, `goimports`, `go vet`, pre-commit) is used instead. |
+| Principle IV: `golangci-lint` gate not runnable (pre-existing config in v1 format, tool at 2.15) | The feature must still merge with a quality bar, and migrating the lint config is a separate change (Sync Impact Report TODO `LINT_CI`) | Migrating `.golangci.yml` here would mix a tooling change into a test-only feature and could force production edits to satisfy new linters, contradicting FR-016 "no application change". Interim gate (`gofmt`, `goimports`, `go vet`, pre-commit) is used instead. |
 | Black-box CLI tests build and exec a binary | `cmd/tf2report/main.go` keeps flags in `init()` and package globals, so in-process tests would leak state between cases and could not observe exit codes | Refactoring `main.go` to be testable is a production change, out of scope here (tracked as TODO `INIT`/`CMD_LOGIC`). |

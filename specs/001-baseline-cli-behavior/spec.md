@@ -6,11 +6,11 @@
 
 **Status**: Draft
 
-**Input**: User description: "Baseline de l'existant: specify the current behavior of the tf2report CLI (plan parsing, filters, markdown/text/json formats, configuration) from the Repomix snapshot, as the brownfield reference for future changes."
+**Input**: User description: "Baseline de l'existant: specify the current behavior of the tf2report CLI (plan parsing, filters, markdown/text/json formats, configuration) from the existing code, as the brownfield reference for future changes."
 
 > This is a **baseline specification**: it documents what tf2report does today, verified by reading
 > the code and running the tool against the repository's sample plan. It is the reference that
-> future feature specs and plans are compared against (Constitution, Principle II). Where current
+> future feature specs and plans are compared against (Constitution). Where current
 > behavior is questionable, it is recorded in *Known Gaps* and not silently "fixed" here.
 
 ## Clarifications

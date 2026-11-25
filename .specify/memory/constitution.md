@@ -19,25 +19,7 @@ and `.github/instructions/go.instructions.md`.
 
 Rationale: a small CLI maintained by few people stays reliable only if it stays boring.
 
-### II. Brownfield Context via Repomix
-
-For brownfield work (any change to existing code), a repository snapshot MUST inform
-planning before changes are proposed.
-
-- During the planning phase, `repomix` MUST be run at the repository root and its output
-  stored with the planning artifacts at `docs/planning/repomix.md`.
-- The team MUST review this context to inform scope, risks and architecture decisions
-  before proposing changes. The plan MUST state which existing capabilities it touches.
-- The snapshot MUST exclude build artifacts (`bin/`, `dist/`), lock files and any file that
-  may hold real infrastructure data or secrets (`*.tfplan.json`, `tf2report.yaml`). The
-  Repomix security check MUST pass.
-- `docs/planning/repomix.md` is regenerable. It MUST be kept out of version control and
-  MUST be regenerated when it predates the changes being planned.
-
-Rationale: specifications written without knowledge of the current code contradict or
-duplicate it.
-
-### III. Layered Package Architecture
+### II. Layered Package Architecture
 
 The current separation of concerns MUST be preserved:
 
@@ -58,7 +40,7 @@ keep existing valid plans working.
 Rationale: a stable parse -> summarize -> format pipeline lets formats and filters evolve
 independently.
 
-### IV. Test-Backed Changes
+### III. Test-Backed Changes
 
 Every new or modified behavior MUST ship with tests in the same change.
 
@@ -75,7 +57,7 @@ same commit. Code touched by a change MUST gain tests.
 Rationale: report output is a contract consumed by CI pipelines and humans; silent drift
 is the main risk.
 
-### V. Automated Quality Gates
+### IV. Automated Quality Gates
 
 Quality is enforced by tools, not by memory.
 
@@ -89,7 +71,7 @@ Quality is enforced by tools, not by memory.
 
 Rationale: the same checks must apply to every contributor and to CI.
 
-### VI. Conventional Commits and Automated Releases
+### V. Conventional Commits and Automated Releases
 
 Releases are produced by tooling and MUST NOT be hand-edited.
 
@@ -127,9 +109,8 @@ Rationale: predictable versioning for users who pin tf2report in CI pipelines.
   MUST be green before merge.
 - Spec Kit flow: `/speckit-specify` -> `/speckit-clarify` -> `/speckit-plan` ->
   `/speckit-tasks` -> `/speckit-implement`. Plans MUST include a Constitution Check.
-- Before planning a change to existing code, Principle II MUST be applied.
-- Reviewers MUST verify: tests present (IV), lint and hooks clean (V), docs and `helper.out`
-  updated when the CLI changes (V), Conventional Commit title (VI).
+- Reviewers MUST verify: tests present (III), lint and hooks clean (IV), docs and `helper.out`
+  updated when the CLI changes (IV), Conventional Commit title (V).
 - Documentation is updated in the same change as the behavior it describes.
 
 ## Governance
