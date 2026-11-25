@@ -1,0 +1,86 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.17.2",
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "synthetic-data-bucket"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.web",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "instance_type": "t2.micro"
+        },
+        "after": {
+          "instance_type": "t2.small"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.app",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "instance_type": "t2.micro"
+        },
+        "after": {
+          "instance_type": "t3.small"
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.old",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "old",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "name": "synthetic-old"
+        },
+        "after": null
+      }
+    }
+  ],
+  "output_changes": {
+    "endpoint": {
+      "actions": [
+        "create"
+      ],
+      "before": null,
+      "after": {
+        "value": "SYNTHETIC-OUTPUT-VALUE"
+      }
+    }
+  }
+}

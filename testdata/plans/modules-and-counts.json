@@ -1,0 +1,90 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.17.2",
+  "resource_changes": [
+    {
+      "address": "module.net.aws_subnet.main",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "cidr_block": "10.0.0.0/24"
+        }
+      }
+    },
+    {
+      "address": "module.dr.aws_subnet.main",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "cidr_block": "10.1.0.0/24"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.web[0]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "instance_type": "t2.micro"
+        },
+        "after": {
+          "instance_type": "t2.small"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.web[1]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "instance_type": "t2.micro"
+        },
+        "after": {
+          "instance_type": "t2.small"
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.logs[\"eu\"]",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "synthetic-logs-eu"
+        }
+      }
+    }
+  ]
+}
