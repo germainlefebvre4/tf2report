@@ -1,0 +1,30 @@
+{
+  "terraform_version": "1.17.2",
+  "summary": {
+    "total_changes": 1,
+    "to_add": 1,
+    "to_change": 0,
+    "to_destroy": 0,
+    "to_replace": 0
+  },
+  "changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "action": "create"
+    }
+  ],
+  "by_type": {
+    "aws_s3_bucket": {
+      "type": "aws_s3_bucket",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "aws_s3_bucket.data"
+      ]
+    }
+  }
+}

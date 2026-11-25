@@ -1,0 +1,69 @@
+{
+  "terraform_version": "1.17.2",
+  "summary": {
+    "total_changes": 4,
+    "to_add": 1,
+    "to_change": 1,
+    "to_destroy": 1,
+    "to_replace": 1
+  },
+  "changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "action": "create"
+    },
+    {
+      "address": "aws_instance.web",
+      "type": "aws_instance",
+      "name": "web",
+      "action": "update"
+    },
+    {
+      "address": "aws_instance.app",
+      "type": "aws_instance",
+      "name": "app",
+      "action": "replace"
+    },
+    {
+      "address": "aws_security_group.old",
+      "type": "aws_security_group",
+      "name": "old",
+      "action": "delete"
+    }
+  ],
+  "by_type": {
+    "aws_instance": {
+      "type": "aws_instance",
+      "to_add": 0,
+      "to_change": 1,
+      "to_destroy": 0,
+      "to_replace": 1,
+      "resources": [
+        "aws_instance.web",
+        "aws_instance.app"
+      ]
+    },
+    "aws_s3_bucket": {
+      "type": "aws_s3_bucket",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "aws_s3_bucket.data"
+      ]
+    },
+    "aws_security_group": {
+      "type": "aws_security_group",
+      "to_add": 0,
+      "to_change": 0,
+      "to_destroy": 1,
+      "to_replace": 0,
+      "resources": [
+        "aws_security_group.old"
+      ]
+    }
+  }
+}

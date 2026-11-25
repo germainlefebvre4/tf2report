@@ -1,0 +1,28 @@
+# Terraform Plan Summary
+
+**Terraform Version:** 1.17.2
+
+## Summary
+
+**Total Changes:** 1
+
+| Action | Count |
+|--------|-------|
+| Add | 1 |
+
+## Resources by Change Type
+
+### To Add (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_s3_bucket` | `data` |
+
+## Changes by Resource Type
+
+### aws_s3_bucket (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_s3_bucket` | `data` | To Add |
+

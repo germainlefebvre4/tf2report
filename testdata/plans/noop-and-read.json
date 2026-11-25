@@ -1,0 +1,68 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.17.2",
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "synthetic-data-bucket"
+        }
+      }
+    },
+    {
+      "address": "aws_vpc.main",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "cidr_block": "10.0.0.0/16"
+        },
+        "after": {
+          "cidr_block": "10.0.0.0/16"
+        }
+      }
+    },
+    {
+      "address": "data.aws_ami.ubuntu",
+      "mode": "data",
+      "type": "aws_ami",
+      "name": "ubuntu",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "read"
+        ],
+        "before": null,
+        "after": {
+          "id": "ami-synthetic"
+        }
+      }
+    },
+    {
+      "address": "aws_eip.empty",
+      "mode": "managed",
+      "type": "aws_eip",
+      "name": "empty",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [],
+        "before": null,
+        "after": null
+      }
+    }
+  ]
+}

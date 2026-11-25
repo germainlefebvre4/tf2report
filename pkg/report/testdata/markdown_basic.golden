@@ -1,0 +1,62 @@
+# Terraform Plan Summary
+
+**Terraform Version:** 1.17.2
+
+## Summary
+
+**Total Changes:** 4
+
+| Action | Count |
+|--------|-------|
+| Add | 1 |
+| Change | 1 |
+| Destroy | 1 |
+| Replace | 1 |
+
+## Resources by Change Type
+
+### To Add (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_s3_bucket` | `data` |
+
+### To Change (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_instance` | `web` |
+
+### To Replace (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_instance` | `app` |
+
+### To Destroy (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_security_group` | `old` |
+
+## Changes by Resource Type
+
+### aws_instance (2)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_instance` | `app` | To Replace |
+| `aws_instance` | `web` | To Change |
+
+### aws_s3_bucket (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_s3_bucket` | `data` | To Add |
+
+### aws_security_group (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_security_group` | `old` | To Destroy |
+

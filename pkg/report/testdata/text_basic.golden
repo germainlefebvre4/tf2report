@@ -1,0 +1,63 @@
+TERRAFORM PLAN SUMMARY
+==================================================
+
+Terraform Version: 1.17.2
+
+SUMMARY
+--------------------------------------------------
+
+Total Changes: 4
+
+  Add:     1
+  Change:  1
+  Destroy: 1
+  Replace: 1
+
+RESOURCES BY CHANGE TYPE
+--------------------------------------------------
+
+To Add (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_s3_bucket   data
+
+To Change (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_instance    web
+
+To Replace (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_instance    app
+
+To Destroy (1)
+
+  Resource Type        Resource Name
+  -------------------- ---------------
+  aws_security_group   old
+
+CHANGES BY RESOURCE TYPE
+--------------------------------------------------
+
+aws_instance (2)
+
+  Resource Type  Resource Name   Change Type
+  -------------- --------------- -------------
+  aws_instance   app             To Replace
+  aws_instance   web             To Change
+
+aws_s3_bucket (1)
+
+  Resource Type   Resource Name   Change Type
+  --------------- --------------- -------------
+  aws_s3_bucket   data            To Add
+
+aws_security_group (1)
+
+  Resource Type        Resource Name   Change Type
+  -------------------- --------------- -------------
+  aws_security_group   old             To Destroy

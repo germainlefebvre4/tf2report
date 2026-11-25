@@ -190,6 +190,39 @@ make test-coverage
 
 This generates `coverage.html` which can be opened in a browser.
 
+### Test Layers
+
+The test suite pins the current behavior of the tool (characterization tests). It has three layers:
+
+- Unit tests next to the code in `pkg/terraform`, `pkg/config` and `pkg/report`.
+- Golden-file tests for the three report formats, stored in `pkg/report/testdata/`.
+- Black-box tests in `cmd/tf2report`, which build the real binary once and run it in an isolated
+  working directory and `HOME`.
+
+Shared synthetic plans live in `testdata/plans/`. They contain no real infrastructure data; see
+`testdata/README.md`.
+
+### Updating Golden Files
+
+Golden files are rewritten only on request, after a deliberate change of a report format:
+
+```bash
+go test ./pkg/report -update
+git diff pkg/report/testdata
+```
+
+Review every changed line before committing.
+
+### Known Gaps
+
+Behaviors that are questionable but currently relied upon are listed in the Known Gaps section of
+`specs/001-baseline-cli-behavior/spec.md`. Each one is pinned by a test named
+`TestKnownGap_<Slug>`. Fixing a gap means changing its test in the same commit. List them with:
+
+```bash
+go test -run KnownGap -v ./...
+```
+
 ### Testing with Example Files
 
 ```bash

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.17.2",
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "synthetic-data-bucket"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.odd",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "odd",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "frobnicate"
+        ],
+        "before": null,
+        "after": null
+      }
+    }
+  ]
+}

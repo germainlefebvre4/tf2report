@@ -1,0 +1,29 @@
+TERRAFORM PLAN SUMMARY
+==================================================
+
+Terraform Version: 1.17.2
+
+SUMMARY
+--------------------------------------------------
+
+Total Changes: 1
+
+  Add:     1
+
+RESOURCES BY CHANGE TYPE
+--------------------------------------------------
+
+To Add (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_s3_bucket   data
+
+CHANGES BY RESOURCE TYPE
+--------------------------------------------------
+
+aws_s3_bucket (1)
+
+  Resource Type   Resource Name   Change Type
+  --------------- --------------- -------------
+  aws_s3_bucket   data            To Add

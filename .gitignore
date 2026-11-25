@@ -10,3 +10,7 @@
 
 # Release
 /dist/*
+
+# Test coverage output
+/coverage.out
+/coverage.html
