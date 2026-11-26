@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 538 276" width="538" height="276" role="img" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+<title>Terraform plan diagram</title>
+<desc>3 resources: create 1, update 1, delete 1</desc>
+<rect width="538" height="276" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57606a"/></marker>
+<symbol id="icon-compute" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect><rect x="9.5" y="9.5" width="5" height="5"></rect><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"></path></symbol>
+<symbol id="icon-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"></circle><circle cx="5" cy="19" r="2.5"></circle><circle cx="19" cy="19" r="2.5"></circle><path d="M12 7.5v4M12 11.5l-5.5 5.5M12 11.5l5.5 5.5"></path></symbol>
+<symbol id="icon-storage" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="6" rx="1.5"></rect><rect x="3" y="13" width="18" height="6" rx="1.5"></rect><path d="M7 8h.01M7 16h.01"></path></symbol>
+</defs>
+<g class="legend">
+<g transform="translate(24 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#116329">+</text><text x="48" y="14" fill="#1f2328">create</text></g>
+<g transform="translate(194 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#ffe8cc" stroke="#953800" stroke-width="2" stroke-dasharray="6 3"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#953800">~</text><text x="48" y="14" fill="#1f2328">update</text></g>
+<g transform="translate(364 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#ffdcd7" stroke="#a40e26" stroke-width="2" stroke-dasharray="2 3"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#a40e26">-</text><text x="48" y="14" fill="#1f2328">delete</text></g>
+</g>
+<g class="container provider"><rect x="41" y="76" width="456" height="176" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="49" y="92" font-weight="bold" fill="#1f2328">aws</text></g>
+<g class="edges">
+</g>
+<g class="nodes">
+<g class="node status-create" color="#1f2328"><title>aws_instance.web</title><rect x="57" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-compute" x="65" y="130" width="24" height="24"/><text x="97" y="137" font-weight="bold" fill="#1f2328">web</text><text x="233" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="97" y="154" fill="#1f2328">aws_instance</text></g>
+<g class="node status-delete" color="#1f2328"><title>aws_s3_bucket.old</title><rect x="297" y="116" width="184" height="52" rx="5" fill="#ffdcd7" stroke="#a40e26" stroke-width="2" stroke-dasharray="2 3"/><use href="#icon-storage" x="305" y="130" width="24" height="24"/><text x="337" y="137" font-weight="bold" fill="#1f2328">old</text><text x="473" y="137" text-anchor="end" font-weight="bold" fill="#a40e26">-</text><text x="337" y="154" fill="#1f2328">aws_s3_bucket</text></g>
+<g class="node status-update" color="#1f2328"><title>aws_subnet.private</title><rect x="57" y="184" width="184" height="52" rx="5" fill="#ffe8cc" stroke="#953800" stroke-width="2" stroke-dasharray="6 3"/><use href="#icon-network" x="65" y="198" width="24" height="24"/><text x="97" y="205" font-weight="bold" fill="#1f2328">private</text><text x="233" y="205" text-anchor="end" font-weight="bold" fill="#953800">~</text><text x="97" y="222" fill="#1f2328">aws_subnet</text></g>
+</g>
+</svg>

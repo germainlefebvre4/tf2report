@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 332" width="504" height="332" role="img" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+<title>Terraform plan diagram</title>
+<desc>4 resources: create 4</desc>
+<rect width="504" height="332" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57606a"/></marker>
+<symbol id="icon-generic" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"></path></symbol>
+</defs>
+<g class="legend">
+<g transform="translate(24 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#116329">+</text><text x="48" y="14" fill="#1f2328">create</text></g>
+</g>
+<g class="container provider"><rect x="24" y="76" width="456" height="108" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="92" font-weight="bold" fill="#1f2328">local</text></g>
+<g class="container provider"><rect x="24" y="200" width="456" height="108" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="216" font-weight="bold" fill="#1f2328">random</text></g>
+<g class="edges">
+</g>
+<g class="nodes">
+<g class="node status-create" color="#1f2328"><title>local_file.greeting</title><rect x="40" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="48" y="130" width="24" height="24"/><text x="80" y="137" font-weight="bold" fill="#1f2328">greeting</text><text x="216" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="154" fill="#1f2328">local_file</text></g>
+<g class="node status-create" color="#1f2328"><title>local_sensitive_file.secret</title><rect x="280" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="288" y="130" width="24" height="24"/><text x="320" y="137" font-weight="bold" fill="#1f2328">secret</text><text x="456" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="320" y="154" fill="#1f2328">local_sensitive_fi…</text></g>
+<g class="node status-create" color="#1f2328"><title>random_password.db</title><rect x="40" y="240" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="48" y="254" width="24" height="24"/><text x="80" y="261" font-weight="bold" fill="#1f2328">db</text><text x="216" y="261" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="278" fill="#1f2328">random_password</text></g>
+<g class="node status-create" color="#1f2328"><title>random_pet.name</title><rect x="280" y="240" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="288" y="254" width="24" height="24"/><text x="320" y="261" font-weight="bold" fill="#1f2328">name</text><text x="456" y="261" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="320" y="278" fill="#1f2328">random_pet</text></g>
+</g>
+</svg>

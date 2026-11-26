@@ -4,7 +4,6 @@
 # Variables
 BINARY_NAME := tf2report
 CMD_DIR := cmd/tf2report
-CMD_MAIN_FILE := $(CMD_DIR)/main.go
 BUILD_DIR := bin
 GO := go
 GOFLAGS := -v
@@ -34,7 +33,7 @@ BUILD_LDFLAGS := $(LDFLAGS) -X 'main.appVersion=$(VERSION)' -X 'main.buildCommit
 .PHONY: build
 build:
 	@echo "Building $(BUILD_DIR)/$(BINARY_NAME)..."
-	$(GO) build -ldflags="$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(CMD_MAIN_FILE)
+	$(GO) build -ldflags="$(BUILD_LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) ./$(CMD_DIR)
 	@chmod +x $(BUILD_DIR)/$(BINARY_NAME)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
 

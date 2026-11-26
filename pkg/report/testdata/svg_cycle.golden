@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 276" width="504" height="276" role="img" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+<title>Terraform plan diagram</title>
+<desc>3 resources: create 3</desc>
+<rect width="504" height="276" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57606a"/></marker>
+<symbol id="icon-security" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"></path><path d="M9 12l2.2 2.2L15.5 10"></path></symbol>
+<symbol id="icon-storage" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="6" rx="1.5"></rect><rect x="3" y="13" width="18" height="6" rx="1.5"></rect><path d="M7 8h.01M7 16h.01"></path></symbol>
+</defs>
+<g class="legend">
+<g transform="translate(24 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#116329">+</text><text x="48" y="14" fill="#1f2328">create</text></g>
+</g>
+<g class="container provider"><rect x="24" y="76" width="456" height="176" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="92" font-weight="bold" fill="#1f2328">aws</text></g>
+<g class="edges">
+<path d="M280 142 C252 142 252 210 224 210" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M40 210 C12 210 492 142 464 142" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+</g>
+<g class="nodes">
+<g class="node status-create" color="#1f2328"><title>aws_s3_bucket.solo</title><rect x="40" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-storage" x="48" y="130" width="24" height="24"/><text x="80" y="137" font-weight="bold" fill="#1f2328">solo</text><text x="216" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="154" fill="#1f2328">aws_s3_bucket</text></g>
+<g class="node status-create" color="#1f2328"><title>aws_security_group.a</title><rect x="280" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-security" x="288" y="130" width="24" height="24"/><text x="320" y="137" font-weight="bold" fill="#1f2328">a</text><text x="456" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="320" y="154" fill="#1f2328">aws_security_group</text></g>
+<g class="node status-create" color="#1f2328"><title>aws_security_group.b</title><rect x="40" y="184" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-security" x="48" y="198" width="24" height="24"/><text x="80" y="205" font-weight="bold" fill="#1f2328">b</text><text x="216" y="205" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="222" fill="#1f2328">aws_security_group</text></g>
+</g>
+</svg>

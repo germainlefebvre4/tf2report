@@ -6,6 +6,8 @@ type Plan struct {
 	TerraformVersion string            `json:"terraform_version"`
 	ResourceChanges  []ResourceChange  `json:"resource_changes"`
 	OutputChanges    map[string]Change `json:"output_changes,omitempty"`
+	// Configuration is nil when the plan has no configuration section.
+	Configuration *Configuration `json:"configuration,omitempty"`
 }
 
 // ResourceChange represents a single resource change in the plan.

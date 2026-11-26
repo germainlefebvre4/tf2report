@@ -79,7 +79,7 @@ func TestFormat_unsupported(t *testing.T) {
 	if res.Stdout != "" {
 		t.Errorf("stdout = %q, want empty", res.Stdout)
 	}
-	if !strings.Contains(res.Stderr, "invalid format: xml (supported: markdown, text, json)") {
+	if !strings.Contains(res.Stderr, "invalid format: xml (supported: markdown, text, json, svg)") {
 		t.Errorf("stderr = %q", res.Stderr)
 	}
 }

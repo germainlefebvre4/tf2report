@@ -94,6 +94,22 @@ real-provider plans. They are pinned by provisional tests, and their counting lo
 once the unreadable flags are removed. The tests also list every file of these directories, so a new
 scenario must be classified.
 
+## Diagram fixtures
+
+`plans/diagram/` holds synthetic plans in the real `terraform show -json` shape, with a `configuration`
+section, for the `svg` format. Every attribute value in them is an invented marker.
+
+- `aws-network.json`: vpc (no-op), subnet (create), instance (update), security group (replace), bucket
+  (delete) and a `count = 2` instance; every status once, references between resources.
+- `azure-network.json`: resource group, virtual network, subnet, VM and storage account (create, update,
+  delete) with references.
+- `gcp-network.json`: network, subnetwork, instance, bucket and SQL instance (create, update, replace),
+  including a `depends_on`.
+- `modules-context.json`: a module output reference, an unchanged resource referenced by a changed one
+  (dependency context), an unreferenced unchanged one, a `count` module pair and a `random` resource.
+- `cycle.json`: two resources that reference each other, plus an independent one.
+- `no-configuration.json`: valid plan without a `configuration` key (older format version).
+
 ## Volume
 
 No large file is committed. `pkg/report/scale_test.go` builds a 5 000-change plan in memory (seven

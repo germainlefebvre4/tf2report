@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 536 704" width="536" height="704" role="img" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+<title>Terraform plan diagram</title>
+<desc>6 resources: create 5, no-op 1</desc>
+<rect width="536" height="704" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57606a"/></marker>
+<symbol id="icon-compute" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect><rect x="9.5" y="9.5" width="5" height="5"></rect><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"></path></symbol>
+<symbol id="icon-generic" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"></path></symbol>
+<symbol id="icon-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"></circle><circle cx="5" cy="19" r="2.5"></circle><circle cx="19" cy="19" r="2.5"></circle><path d="M12 7.5v4M12 11.5l-5.5 5.5M12 11.5l5.5 5.5"></path></symbol>
+</defs>
+<g class="legend">
+<g transform="translate(24 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#116329">+</text><text x="48" y="14" fill="#1f2328">create</text></g>
+<g transform="translate(194 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#eaeef2" stroke="#6e7781" stroke-width="1" opacity="0.6"/><text x="48" y="14" fill="#1f2328">no-op</text></g>
+</g>
+<g class="container provider"><rect x="24" y="76" width="488" height="480" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="92" font-weight="bold" fill="#1f2328">aws</text></g>
+<g class="container module"><rect x="40" y="184" width="216" height="108" rx="6" fill="#fbfcfd" stroke="#afb8c1" stroke-width="1"/><text x="48" y="200" font-weight="bold" fill="#1f2328">module.app[0]</text></g>
+<g class="container module"><rect x="40" y="308" width="216" height="108" rx="6" fill="#fbfcfd" stroke="#afb8c1" stroke-width="1"/><text x="48" y="324" font-weight="bold" fill="#1f2328">module.app[1]</text></g>
+<g class="container module"><rect x="40" y="432" width="456" height="108" rx="6" fill="#fbfcfd" stroke="#afb8c1" stroke-width="1"/><text x="48" y="448" font-weight="bold" fill="#1f2328">module.network</text></g>
+<g class="container provider"><rect x="24" y="572" width="216" height="108" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="588" font-weight="bold" fill="#1f2328">random</text></g>
+<g class="edges">
+<path d="M40 142 C12 142 524 486 496 486" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M296 498 C268 498 268 498 240 498" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+</g>
+<g class="nodes">
+<g class="node status-create" color="#1f2328"><title>aws_instance.app</title><rect x="40" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-compute" x="48" y="130" width="24" height="24"/><text x="80" y="137" font-weight="bold" fill="#1f2328">app</text><text x="216" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="154" fill="#1f2328">aws_instance</text></g>
+<g class="node status-create" color="#1f2328"><title>module.app[0].aws_instance.node</title><rect x="56" y="224" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-compute" x="64" y="238" width="24" height="24"/><text x="96" y="245" font-weight="bold" fill="#1f2328">node</text><text x="232" y="245" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="96" y="262" fill="#1f2328">aws_instance</text></g>
+<g class="node status-create" color="#1f2328"><title>module.app[1].aws_instance.node</title><rect x="56" y="348" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-compute" x="64" y="362" width="24" height="24"/><text x="96" y="369" font-weight="bold" fill="#1f2328">node</text><text x="232" y="369" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="96" y="386" fill="#1f2328">aws_instance</text></g>
+<g class="node status-create" color="#1f2328"><title>module.network.aws_subnet.a</title><rect x="296" y="472" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-network" x="304" y="486" width="24" height="24"/><text x="336" y="493" font-weight="bold" fill="#1f2328">a</text><text x="472" y="493" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="336" y="510" fill="#1f2328">aws_subnet</text></g>
+<g class="node status-noop context" color="#1f2328"><title>module.network.aws_vpc.main</title><rect x="56" y="472" width="184" height="52" rx="5" fill="#eaeef2" stroke="#6e7781" stroke-width="1" opacity="0.6"/><use href="#icon-network" x="64" y="486" width="24" height="24"/><text x="96" y="493" font-weight="bold" fill="#1f2328">main</text><text x="96" y="510" fill="#1f2328">aws_vpc</text></g>
+<g class="node status-create" color="#1f2328"><title>random_pet.name</title><rect x="40" y="612" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="48" y="626" width="24" height="24"/><text x="80" y="633" font-weight="bold" fill="#1f2328">name</text><text x="216" y="633" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="650" fill="#1f2328">random_pet</text></g>
+</g>
+</svg>

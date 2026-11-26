@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 744 276" width="744" height="276" role="img" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+<title>Terraform plan diagram</title>
+<desc>5 resources: create 3, update 1, replace 1</desc>
+<rect width="744" height="276" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57606a"/></marker>
+<symbol id="icon-compute" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect><rect x="9.5" y="9.5" width="5" height="5"></rect><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"></path></symbol>
+<symbol id="icon-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"></ellipse><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13"></path><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"></path></symbol>
+<symbol id="icon-generic" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"></path></symbol>
+<symbol id="icon-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"></circle><circle cx="5" cy="19" r="2.5"></circle><circle cx="19" cy="19" r="2.5"></circle><path d="M12 7.5v4M12 11.5l-5.5 5.5M12 11.5l5.5 5.5"></path></symbol>
+<symbol id="icon-storage" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="6" rx="1.5"></rect><rect x="3" y="13" width="18" height="6" rx="1.5"></rect><path d="M7 8h.01M7 16h.01"></path></symbol>
+</defs>
+<g class="legend">
+<g transform="translate(24 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#116329">+</text><text x="48" y="14" fill="#1f2328">create</text></g>
+<g transform="translate(194 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#ffe8cc" stroke="#953800" stroke-width="2" stroke-dasharray="6 3"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#953800">~</text><text x="48" y="14" fill="#1f2328">update</text></g>
+<g transform="translate(364 24)"><rect x="0" y="0" width="40" height="20" rx="5" fill="#eddcff" stroke="#6639ba" stroke-width="2" stroke-dasharray="8 3 2 3"/><text x="20" y="14" text-anchor="middle" font-weight="bold" fill="#6639ba">-/+</text><text x="48" y="14" fill="#1f2328">replace</text></g>
+</g>
+<g class="container provider"><rect x="24" y="76" width="696" height="176" rx="6" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1"/><text x="32" y="92" font-weight="bold" fill="#1f2328">google</text></g>
+<g class="edges">
+<path d="M520 142 C492 142 492 142 464 142" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M280 142 C252 142 252 142 224 142" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M280 210 C252 210 252 142 224 142" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+</g>
+<g class="nodes">
+<g class="node status-replace" color="#1f2328"><title>google_compute_instance.app</title><rect x="520" y="116" width="184" height="52" rx="5" fill="#eddcff" stroke="#6639ba" stroke-width="2" stroke-dasharray="8 3 2 3"/><use href="#icon-compute" x="528" y="130" width="24" height="24"/><text x="560" y="137" font-weight="bold" fill="#1f2328">app</text><text x="696" y="137" text-anchor="end" font-weight="bold" fill="#6639ba">-/+</text><text x="560" y="154" fill="#1f2328">google_compute_ins…</text></g>
+<g class="node status-create" color="#1f2328"><title>google_compute_network.main</title><rect x="40" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-network" x="48" y="130" width="24" height="24"/><text x="80" y="137" font-weight="bold" fill="#1f2328">main</text><text x="216" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="80" y="154" fill="#1f2328">google_compute_net…</text></g>
+<g class="node status-create" color="#1f2328"><title>google_compute_subnetwork.app</title><rect x="280" y="116" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-generic" x="288" y="130" width="24" height="24"/><text x="320" y="137" font-weight="bold" fill="#1f2328">app</text><text x="456" y="137" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="320" y="154" fill="#1f2328">google_compute_sub…</text></g>
+<g class="node status-create" color="#1f2328"><title>google_sql_database_instance.db</title><rect x="280" y="184" width="184" height="52" rx="5" fill="#dafbe1" stroke="#116329" stroke-width="2"/><use href="#icon-database" x="288" y="198" width="24" height="24"/><text x="320" y="205" font-weight="bold" fill="#1f2328">db</text><text x="456" y="205" text-anchor="end" font-weight="bold" fill="#116329">+</text><text x="320" y="222" fill="#1f2328">google_sql_databas…</text></g>
+<g class="node status-update" color="#1f2328"><title>google_storage_bucket.data</title><rect x="40" y="184" width="184" height="52" rx="5" fill="#ffe8cc" stroke="#953800" stroke-width="2" stroke-dasharray="6 3"/><use href="#icon-storage" x="48" y="198" width="24" height="24"/><text x="80" y="205" font-weight="bold" fill="#1f2328">data</text><text x="216" y="205" text-anchor="end" font-weight="bold" fill="#953800">~</text><text x="80" y="222" fill="#1f2328">google_storage_buc…</text></g>
+</g>
+</svg>

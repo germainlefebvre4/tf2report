@@ -18,6 +18,7 @@ tf2report --plan examples/sample-plan.json --format json --type aws_instance
 | `imported-resource.json` | A resource adopted through an `import` block |
 | `no-changes.json` | A plan where every resource is up to date |
 | `empty-config.json` | A plan for a configuration without any resource |
+| `svg-network.json` | A synthetic network plan with dependencies and every status, made for `--format svg` |
 | `legacy-format-0.1.json` | The older plan format (`format_version` 0.1, Terraform 0.12) |
 
 Every file here is a copy of a fixture under `testdata/plans/`, and a test keeps both in sync and checks

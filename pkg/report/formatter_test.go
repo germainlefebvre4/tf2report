@@ -16,9 +16,10 @@ func TestParseFormat(t *testing.T) {
 		{input: "text", want: FormatText},
 		{input: "txt", want: FormatText},
 		{input: "json", want: FormatJSON},
-		{input: "xml", wantErr: "invalid format: xml (supported: markdown, text, json)"},
-		{input: "", wantErr: "invalid format:  (supported: markdown, text, json)"},
-		{input: "MARKDOWN", wantErr: "invalid format: MARKDOWN (supported: markdown, text, json)"},
+		{input: "svg", want: FormatSVG},
+		{input: "xml", wantErr: "invalid format: xml (supported: markdown, text, json, svg)"},
+		{input: "", wantErr: "invalid format:  (supported: markdown, text, json, svg)"},
+		{input: "MARKDOWN", wantErr: "invalid format: MARKDOWN (supported: markdown, text, json, svg)"},
 	}
 
 	for _, tt := range tests {
@@ -48,6 +49,7 @@ func TestNewFormatter(t *testing.T) {
 		{FormatMarkdown, &MarkdownFormatter{}},
 		{FormatText, &TextFormatter{}},
 		{FormatJSON, &JSONFormatter{}},
+		{FormatSVG, &SVGFormatter{}},
 	}
 
 	for _, tt := range tests {

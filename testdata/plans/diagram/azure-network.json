@@ -1,0 +1,229 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "azurerm_resource_group.main",
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_virtual_network.main",
+      "mode": "managed",
+      "type": "azurerm_virtual_network",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_subnet.app",
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_linux_virtual_machine.app",
+      "mode": "managed",
+      "type": "azurerm_linux_virtual_machine",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_storage_account.logs",
+      "mode": "managed",
+      "type": "azurerm_storage_account",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-logs",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-logs"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "configuration": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_resource_group.main",
+          "mode": "managed",
+          "type": "azurerm_resource_group",
+          "name": "main",
+          "provider_config_key": "azurerm",
+          "expressions": {}
+        },
+        {
+          "address": "azurerm_virtual_network.main",
+          "mode": "managed",
+          "type": "azurerm_virtual_network",
+          "name": "main",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "azurerm_resource_group.main.name",
+                "azurerm_resource_group.main"
+              ]
+            }
+          }
+        },
+        {
+          "address": "azurerm_subnet.app",
+          "mode": "managed",
+          "type": "azurerm_subnet",
+          "name": "app",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "azurerm_virtual_network.main.name",
+                "azurerm_virtual_network.main"
+              ]
+            },
+            "blk1": [
+              {
+                "inner": {
+                  "references": [
+                    "azurerm_resource_group.main.name"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "address": "azurerm_linux_virtual_machine.app",
+          "mode": "managed",
+          "type": "azurerm_linux_virtual_machine",
+          "name": "app",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "azurerm_subnet.app.id",
+                "azurerm_subnet.app"
+              ]
+            }
+          }
+        },
+        {
+          "address": "azurerm_storage_account.logs",
+          "mode": "managed",
+          "type": "azurerm_storage_account",
+          "name": "logs",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "azurerm_resource_group.main.name",
+                "azurerm_resource_group.main"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
