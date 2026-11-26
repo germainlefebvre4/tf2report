@@ -26,14 +26,19 @@ The current separation of concerns MUST be preserved:
 - `cmd/tf2report` holds the CLI entry point only (cobra wiring, flags, version injection).
   It MUST NOT contain parsing or formatting logic.
 - `pkg/terraform` parses Terraform plan JSON and computes the change summary.
-- `pkg/report` renders output. Every output format (markdown, text, json) MUST be a
-  `Formatter` implementation selected through `NewFormatter`; adding a format MUST NOT
-  require changing the parser.
+- `pkg/diagram` selects the resources to draw, groups them in containers, resolves
+  dependency edges, assigns icon families and computes the layout of a render-independent
+  `Scene`. It imports `pkg/terraform` only and has no rendering knowledge.
+- `pkg/report` renders output. Every output format (markdown, text, json, svg) MUST be a
+  `Formatter` implementation selected through `NewFormatter`. Adding a format MUST NOT
+  change how existing plans are parsed or the output of existing formats; extending the
+  parsed model with new optional fields is allowed and MUST keep every previously valid
+  plan working.
 - `pkg/config` loads configuration (defaults, YAML file, `TF2REPORT_*` environment
   variables, via viper); command-line flags override it in `cmd`.
 
-Dependencies flow `cmd` -> `pkg/*`, `pkg/report` -> `pkg/terraform` and `pkg/config` ->
-`pkg/terraform`; circular dependencies are forbidden. Interfaces are small and defined where they are consumed.
+Dependencies flow `cmd` -> `pkg/*`, `pkg/report` -> `pkg/diagram` -> `pkg/terraform`,
+`pkg/report` -> `pkg/terraform` and `pkg/config` -> `pkg/terraform`; circular dependencies are forbidden. Interfaces are small and defined where they are consumed.
 The input contract is the output of `terraform show -json`; changes to how it is read MUST
 keep existing valid plans working.
 
@@ -92,12 +97,12 @@ Rationale: predictable versioning for users who pin tf2report in CI pipelines.
   MUST update `go.mod`, CI workflows and this section together.
 - Platforms: Linux and macOS binaries via GoReleaser. Windows is currently disabled and
   MUST be re-enabled explicitly, not implicitly.
-- The tool is read-only and offline: it reads a plan file and writes a report to stdout or
-  a file. It MUST NOT call the Terraform CLI, cloud APIs or any network endpoint.
+- The tool is read-only and offline: it reads a plan file (and, for the `svg` format, one
+  optional local icon directory) and writes a report to stdout or a file. It MUST NOT call the Terraform CLI, cloud APIs or any network endpoint.
 - Plan files and reports may contain sensitive infrastructure values. The tool MUST NOT
   log or echo raw attribute values beyond what the selected report format specifies, and
   fixtures committed to the repository MUST contain synthetic data only.
-- Output formats: `markdown` (default), `text`, `json`. Filters: resource type and action.
+- Output formats: `markdown` (default), `text`, `json`, `svg`. Filters: resource type and action.
 - Build and local tasks go through the `Makefile`, written per
   `.github/instructions/makefile.instructions.md`.
 - Documentation lives in `README.md` and `docs/`, without emojis. Example plans live in
@@ -131,4 +136,15 @@ corrected.
 - **Runtime guidance**: `.github/instructions/go.instructions.md` and
   `.github/instructions/makefile.instructions.md` hold day-to-day conventions.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-22 | **Last Amended**: 2026-11-22
+## Amendment history
+
+- **1.1.0 (2026-11-26)**: added `pkg/diagram` and the `svg` output format; allowed one optional,
+  read-only, local icon directory as a second input (still no network); reworded the parser rule
+  of Principle II so that extending the parsed model with new optional fields is allowed.
+  Rationale: the `svg` format needs the dependency relations of the plan `configuration`
+  section and a layout reusable by a future isometric renderer (three deviations tracked in
+  `specs/002-svg-resource-diagram/plan.md`). Migration note: specs and plans in flight that
+  relied on the parser never changing (spec 001) remain valid; the baseline characterization
+  tests keep pinning the existing parse behavior.
+
+**Version**: 1.1.0 | **Ratified**: 2026-11-22 | **Last Amended**: 2026-11-26
