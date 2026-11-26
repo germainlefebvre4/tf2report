@@ -13,6 +13,7 @@ var exampleSources = map[string]string{
 	"legacy-format-0.1.json":             "legacy-format.json",
 	"replace-create-before-destroy.json": "terraform/create-before-destroy.json",
 	"replace-forced.json":                "terraform/forced-replace.json",
+	"opentofu-replace-forced.json":       "opentofu/forced-replace.json",
 	"moved-resources.json":               "terraform/moved.json",
 	"imported-resource.json":             "terraform/import.json",
 	"no-changes.json":                    "terraform/no-changes.json",

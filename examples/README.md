@@ -13,6 +13,7 @@ tf2report --plan examples/sample-plan.json --format json --type aws_instance
 | `sample-plan.json` | Add, change, replace and destroy across AWS, Azure, Google, Kubernetes, Datadog and Cloudflare, plus one no-op |
 | `replace-create-before-destroy.json` | A replacement ordered `create` then `delete` (`create_before_destroy`) |
 | `replace-forced.json` | Replacements requested with `-replace` and caused by a tainted resource, plus one untouched resource |
+| `opentofu-replace-forced.json` | The same scenario planned by OpenTofu 1.9.0 instead of Terraform |
 | `moved-resources.json` | A resource moved and changed in the same plan, and a pure move |
 | `imported-resource.json` | A resource adopted through an `import` block |
 | `no-changes.json` | A plan where every resource is up to date |

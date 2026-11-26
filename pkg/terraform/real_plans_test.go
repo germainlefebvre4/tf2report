@@ -12,7 +12,8 @@ import (
 // by scripts/gen-plans.sh from testdata/scenarios/<name>. The expected counts were derived from the
 // JSON itself (jq over resource_changes[].change.actions), not from this tool.
 type realPlan struct {
-	name string
+	engine string // terraform or opentofu: the directory under testdata/plans
+	name   string
 	// parses is false when the plan carries a boolean sensitivity flag (every plan that creates or
 	// deletes a resource does), which the parser rejects today: see TestKnownGap_RealPlansRejected.
 	parses                        bool
@@ -20,7 +21,8 @@ type realPlan struct {
 	ignored                       int // no-op and read entries, excluded from every count
 }
 
-var realPlans = []realPlan{
+// sharedScenarios are planned by both engines and give the same counts.
+var sharedScenarios = []realPlan{
 	{name: "count-for-each", add: 8},
 	{name: "create-before-destroy", parses: true, replace: 1},
 	{name: "data-source", add: 1, ignored: 1},
@@ -33,18 +35,43 @@ var realPlans = []realPlan{
 	{name: "nested-modules", add: 7},
 	{name: "no-changes", parses: true, ignored: 2},
 	{name: "sensitive", add: 1},
+	{name: "provider-random", add: 4},
 }
 
-func realPlanPath(name string) string {
-	return filepath.Join("..", "..", "testdata", "plans", "terraform", name+".json")
+// realPlans lists every file of testdata/plans/terraform and testdata/plans/opentofu.
+var realPlans = buildRealPlans()
+
+func buildRealPlans() []realPlan {
+	var plans []realPlan
+	for _, engine := range []string{"terraform", "opentofu"} {
+		for _, rp := range sharedScenarios {
+			rp.engine = engine
+			plans = append(plans, rp)
+		}
+	}
+	return append(plans,
+		// Real providers (AWS, Google, Kubernetes, GitHub), planned offline with synthetic credentials.
+		realPlan{engine: "terraform", name: "provider-multi-create", add: 4},
+		realPlan{engine: "terraform", name: "provider-multi-actions", add: 1, change: 1, destroy: 1, replace: 1, ignored: 1},
+		realPlan{engine: "terraform", name: "provider-nested-blocks", add: 3},
+		realPlan{engine: "terraform", name: "provider-sensitive", add: 1},
+		// OpenTofu only: provider instances created with for_each.
+		realPlan{engine: "opentofu", name: "opentofu-provider-for-each", add: 3},
+	)
 }
 
-func realPlanData(t *testing.T, name string) []byte {
+func (rp realPlan) id() string { return rp.engine + "/" + rp.name }
+
+func realPlanPath(engine, name string) string {
+	return filepath.Join("..", "..", "testdata", "plans", engine, name+".json")
+}
+
+func realPlanData(t *testing.T, engine, name string) []byte {
 	t.Helper()
 
-	data, err := os.ReadFile(realPlanPath(name))
+	data, err := os.ReadFile(realPlanPath(engine, name))
 	if err != nil {
-		t.Fatalf("read real plan %s: %v", name, err)
+		t.Fatalf("read real plan %s/%s: %v", engine, name, err)
 	}
 	return data
 }
@@ -75,27 +102,29 @@ func withoutSensitivityFlags(t *testing.T, data []byte) []byte {
 	return out
 }
 
-// Every file in testdata/plans/terraform must be classified in realPlans, so a regenerated or newly
+// Every file in testdata/plans/<engine> must be classified in realPlans, so a regenerated or newly
 // added scenario cannot silently escape the tests.
 func TestRealPlans_AllClassified(t *testing.T) {
-	files, err := filepath.Glob(realPlanPath("*"))
-	if err != nil {
-		t.Fatalf("glob: %v", err)
-	}
-
 	known := map[string]bool{}
 	for _, rp := range realPlans {
-		known[rp.name] = true
+		known[rp.id()] = true
 	}
-	for _, f := range files {
-		name := strings.TrimSuffix(filepath.Base(f), ".json")
-		if !known[name] {
-			t.Errorf("%s is not listed in realPlans", name)
+
+	for _, engine := range []string{"terraform", "opentofu"} {
+		files, err := filepath.Glob(realPlanPath(engine, "*"))
+		if err != nil {
+			t.Fatalf("glob: %v", err)
 		}
-		delete(known, name)
+		for _, f := range files {
+			id := engine + "/" + strings.TrimSuffix(filepath.Base(f), ".json")
+			if !known[id] {
+				t.Errorf("%s is not listed in realPlans", id)
+			}
+			delete(known, id)
+		}
 	}
-	for name := range known {
-		t.Errorf("realPlans lists %s but the fixture file is missing", name)
+	for id := range known {
+		t.Errorf("realPlans lists %s but the fixture file is missing", id)
 	}
 }
 
@@ -105,8 +134,8 @@ func TestRealPlans_SummaryAsExported(t *testing.T) {
 		if !rp.parses {
 			continue
 		}
-		t.Run(rp.name, func(t *testing.T) {
-			plan, err := NewParser().Parse(realPlanData(t, rp.name))
+		t.Run(rp.id(), func(t *testing.T) {
+			plan, err := NewParser().Parse(realPlanData(t, rp.engine, rp.name))
 			if err != nil {
 				t.Fatalf("Parse: %v", err)
 			}
@@ -119,8 +148,8 @@ func TestRealPlans_SummaryAsExported(t *testing.T) {
 // This covers create, delete and mixed plans that the parser rejects as exported.
 func TestRealPlans_SummaryWithoutSensitivityFlags(t *testing.T) {
 	for _, rp := range realPlans {
-		t.Run(rp.name, func(t *testing.T) {
-			plan, err := NewParser().Parse(withoutSensitivityFlags(t, realPlanData(t, rp.name)))
+		t.Run(rp.id(), func(t *testing.T) {
+			plan, err := NewParser().Parse(withoutSensitivityFlags(t, realPlanData(t, rp.engine, rp.name)))
 			if err != nil {
 				t.Fatalf("Parse: %v", err)
 			}
@@ -154,8 +183,8 @@ func TestKnownGap_RealPlansRejected(t *testing.T) {
 		if rp.parses {
 			continue
 		}
-		t.Run(rp.name, func(t *testing.T) {
-			_, err := NewParser().Parse(realPlanData(t, rp.name))
+		t.Run(rp.id(), func(t *testing.T) {
+			_, err := NewParser().Parse(realPlanData(t, rp.engine, rp.name))
 			if err == nil {
 				t.Fatalf("Parse succeeded; the gap seems fixed, update this test")
 			}
@@ -168,24 +197,8 @@ func TestKnownGap_RealPlansRejected(t *testing.T) {
 
 // Regular test: attributes of real plans that the report logic relies on or must tolerate.
 func TestRealPlans_Attributes(t *testing.T) {
-	parse := func(t *testing.T, name string) *Plan {
-		t.Helper()
-		plan, err := NewParser().Parse(withoutSensitivityFlags(t, realPlanData(t, name)))
-		if err != nil {
-			t.Fatalf("Parse %s: %v", name, err)
-		}
-		return plan
-	}
-	find := func(t *testing.T, plan *Plan, address string) ResourceChange {
-		t.Helper()
-		for _, rc := range plan.ResourceChanges {
-			if rc.Address == address {
-				return rc
-			}
-		}
-		t.Fatalf("address %q not found in plan", address)
-		return ResourceChange{}
-	}
+	parse := func(t *testing.T, name string) *Plan { return parseReal(t, "terraform", name) }
+	find := findChange
 
 	t.Run("create-before-destroy order is a replace", func(t *testing.T) {
 		rc := find(t, parse(t, "create-before-destroy"), "terraform_data.cbd")
@@ -284,12 +297,151 @@ func TestRealPlans_Attributes(t *testing.T) {
 	})
 
 	t.Run("empty configuration has no resource_changes", func(t *testing.T) {
-		plan, err := NewParser().Parse(realPlanData(t, "empty-config"))
+		plan, err := NewParser().Parse(realPlanData(t, "terraform", "empty-config"))
 		if err != nil {
 			t.Fatalf("Parse: %v", err)
 		}
 		if len(plan.ResourceChanges) != 0 {
 			t.Errorf("resource_changes = %d entries, want 0", len(plan.ResourceChanges))
+		}
+	})
+}
+
+// parseReal parses a real plan once the flags the parser cannot read today are removed.
+func parseReal(t *testing.T, engine, name string) *Plan {
+	t.Helper()
+
+	plan, err := NewParser().Parse(withoutSensitivityFlags(t, realPlanData(t, engine, name)))
+	if err != nil {
+		t.Fatalf("Parse %s/%s: %v", engine, name, err)
+	}
+	return plan
+}
+
+func findChange(t *testing.T, plan *Plan, address string) ResourceChange {
+	t.Helper()
+
+	for _, rc := range plan.ResourceChanges {
+		if rc.Address == address {
+			return rc
+		}
+	}
+	t.Fatalf("address %q not found in plan", address)
+	return ResourceChange{}
+}
+
+// Regular test: OpenTofu and Terraform plans are classified the same way, and each reports its own
+// version.
+func TestRealPlans_EnginesAgree(t *testing.T) {
+	wantVersion := map[string]string{"terraform": "1.10.5", "opentofu": "1.9.0"}
+
+	for _, engine := range []string{"terraform", "opentofu"} {
+		t.Run(engine, func(t *testing.T) {
+			forced := parseReal(t, engine, "forced-replace")
+			if got := forced.TerraformVersion; got != wantVersion[engine] {
+				t.Errorf("terraform_version = %q, want %q", got, wantVersion[engine])
+			}
+			for address, reason := range map[string]string{
+				"terraform_data.requested": "replace_by_request",
+				"terraform_data.tainted":   "replace_because_tainted",
+			} {
+				rc := findChange(t, forced, address)
+				if rc.ActionReason != reason || rc.Change.GetPrimaryAction() != ActionReplace {
+					t.Errorf("%s: reason %q, action %q, want %q and replace", address, rc.ActionReason, rc.Change.GetPrimaryAction(), reason)
+				}
+			}
+
+			cbd := findChange(t, parseReal(t, engine, "create-before-destroy"), "terraform_data.cbd")
+			if cbd.Change.GetPrimaryAction() != ActionReplace || cbd.Change.Actions[0] != "create" {
+				t.Errorf("create-before-destroy: actions %v, want a replace ordered create then delete", cbd.Change.Actions)
+			}
+
+			moved := findChange(t, parseReal(t, engine, "moved"), "terraform_data.renamed_and_changed")
+			if moved.PreviousAddr != "terraform_data.moved_and_changed" {
+				t.Errorf("previous_address = %q", moved.PreviousAddr)
+			}
+		})
+	}
+}
+
+// Regular test: plans produced with real providers keep their provider source, the registry of the
+// engine that generated them and the action chosen by the provider schema.
+func TestRealPlans_Providers(t *testing.T) {
+	t.Run("provider sources", func(t *testing.T) {
+		plan := parseReal(t, "terraform", "provider-multi-create")
+		for address, provider := range map[string]string{
+			"aws_s3_bucket.data":         "registry.terraform.io/hashicorp/aws",
+			"google_storage_bucket.data": "registry.terraform.io/hashicorp/google",
+			"kubernetes_namespace.app":   "registry.terraform.io/hashicorp/kubernetes",
+			"github_repository.app":      "registry.terraform.io/integrations/github",
+		} {
+			if got := findChange(t, plan, address).ProviderName; got != provider {
+				t.Errorf("%s provider = %q, want %q", address, got, provider)
+			}
+		}
+	})
+
+	t.Run("same provider, registry of each engine", func(t *testing.T) {
+		for engine, registry := range map[string]string{
+			"terraform": "registry.terraform.io/hashicorp/random",
+			"opentofu":  "registry.opentofu.org/hashicorp/random",
+		} {
+			rc := findChange(t, parseReal(t, engine, "provider-random"), "random_pet.name")
+			if rc.ProviderName != registry {
+				t.Errorf("%s: provider = %q, want %q", engine, rc.ProviderName, registry)
+			}
+		}
+	})
+
+	t.Run("actions chosen by the provider", func(t *testing.T) {
+		plan := parseReal(t, "terraform", "provider-multi-actions")
+		for address, want := range map[string]struct {
+			action ActionType
+			reason string
+		}{
+			"aws_s3_bucket.data":         {ActionReplace, "replace_because_cannot_update"},
+			"aws_s3_bucket.logs":         {ActionDelete, "delete_because_no_resource_config"},
+			"google_storage_bucket.data": {ActionUpdate, ""},
+			"kubernetes_namespace.app":   {ActionNoOp, ""},
+			"github_repository.app":      {ActionCreate, ""},
+		} {
+			rc := findChange(t, plan, address)
+			if got := rc.Change.GetPrimaryAction(); got != want.action || rc.ActionReason != want.reason {
+				t.Errorf("%s: action %q reason %q, want %q and %q", address, got, rc.ActionReason, want.action, want.reason)
+			}
+		}
+	})
+
+	t.Run("per-type summary over several providers", func(t *testing.T) {
+		s := NewSummary(parseReal(t, "terraform", "provider-multi-create").ResourceChanges)
+		for _, typ := range []string{"aws_s3_bucket", "google_storage_bucket", "kubernetes_namespace", "github_repository"} {
+			if ts := s.ByType[typ]; ts.ToAdd != 1 {
+				t.Errorf("ByType[%s].ToAdd = %d, want 1", typ, ts.ToAdd)
+			}
+		}
+	})
+
+	t.Run("nested blocks, sets and jsonencode", func(t *testing.T) {
+		plan := parseReal(t, "terraform", "provider-nested-blocks")
+		sg := findChange(t, plan, "aws_security_group.web")
+		ingress, ok := sg.Change.After["ingress"].([]any)
+		if !ok || len(ingress) != 2 {
+			t.Fatalf("ingress = %v, want a list of 2 blocks", sg.Change.After["ingress"])
+		}
+		if _, ok := findChange(t, plan, "aws_iam_policy.read").Change.After["policy"].(string); !ok {
+			t.Errorf("policy is not the JSON string produced by jsonencode")
+		}
+		if got := NewSummary(plan.ResourceChanges).TotalChanges; got != 3 {
+			t.Errorf("TotalChanges = %d, want 3", got)
+		}
+	})
+
+	t.Run("OpenTofu provider for_each", func(t *testing.T) {
+		plan := parseReal(t, "opentofu", "opentofu-provider-for-each")
+		for _, address := range []string{`random_pet.region["eu"]`, `random_pet.region["us"]`} {
+			if got := findChange(t, plan, address).ProviderName; got != "registry.opentofu.org/hashicorp/random" {
+				t.Errorf("%s provider = %q", address, got)
+			}
 		}
 	})
 }

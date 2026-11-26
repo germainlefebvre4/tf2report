@@ -98,7 +98,8 @@ deps:
 run: build
 	./$(BUILD_DIR)/$(BINARY_NAME) --plan examples/sample-plan.json
 
-# Regenerate the authentic plan fixtures in testdata/plans/terraform (needs terraform and jq)
+# Regenerate the authentic plan fixtures in testdata/plans/{terraform,opentofu} (needs jq, terraform and tofu;
+# the first run downloads about 1 GB of providers)
 .PHONY: fixtures
 fixtures:
 	./scripts/gen-plans.sh
@@ -149,6 +150,6 @@ help:
 	@echo "  verify       - Verify dependencies"
 	@echo "  deps         - Download dependencies"
 	@echo "  run          - Build and run the application on examples/sample-plan.json"
-	@echo "  fixtures     - Regenerate testdata/plans/terraform with terraform and jq"
+	@echo "  fixtures     - Regenerate testdata/plans/{terraform,opentofu} (see testdata/README.md)"
 	@echo "  release      - Build for multiple platforms"
 	@echo "  help         - Show this help message"

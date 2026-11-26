@@ -1,0 +1,147 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "variables": {
+    "db_password": {
+      "value": "SYNTHETIC-SECRET-PASSWORD"
+    }
+  },
+  "planned_values": {
+    "outputs": {
+      "password": {
+        "sensitive": true,
+        "type": "string",
+        "value": "SYNTHETIC-SECRET-PASSWORD"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "terraform_data.database",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "database",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": {
+              "password": "SYNTHETIC-SECRET-PASSWORD",
+              "username": "synthetic"
+            },
+            "triggers_replace": null
+          },
+          "sensitive_values": {
+            "input": {
+              "password": true
+            },
+            "output": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "terraform_data.database",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "database",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": {
+            "password": "SYNTHETIC-SECRET-PASSWORD",
+            "username": "synthetic"
+          },
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "input": {},
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "input": {
+            "password": true
+          },
+          "output": {}
+        }
+      }
+    }
+  ],
+  "output_changes": {
+    "password": {
+      "actions": [
+        "create"
+      ],
+      "before": null,
+      "after": "SYNTHETIC-SECRET-PASSWORD",
+      "after_unknown": false,
+      "before_sensitive": true,
+      "after_sensitive": true
+    }
+  },
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.9.0",
+    "values": {
+      "outputs": {
+        "password": {
+          "sensitive": true,
+          "value": "SYNTHETIC-SECRET-PASSWORD",
+          "type": "string"
+        }
+      },
+      "root_module": {}
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "terraform": {
+        "name": "terraform",
+        "full_name": "terraform.io/builtin/terraform"
+      }
+    },
+    "root_module": {
+      "outputs": {
+        "password": {
+          "sensitive": true,
+          "expression": {
+            "references": [
+              "var.db_password"
+            ]
+          }
+        }
+      },
+      "resources": [
+        {
+          "address": "terraform_data.database",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "database",
+          "provider_config_key": "terraform",
+          "expressions": {
+            "input": {
+              "references": [
+                "var.db_password"
+              ]
+            }
+          },
+          "schema_version": 0
+        }
+      ],
+      "variables": {
+        "db_password": {
+          "default": "SYNTHETIC-SECRET-PASSWORD",
+          "sensitive": true
+        }
+      }
+    }
+  },
+  "errored": false
+}
