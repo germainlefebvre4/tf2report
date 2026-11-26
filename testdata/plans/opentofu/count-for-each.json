@@ -1,0 +1,362 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "terraform_data.counted[0]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "counted",
+          "index": 0,
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "item-0",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.counted[1]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "counted",
+          "index": 1,
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "item-1",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.counted[2]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "counted",
+          "index": 2,
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "item-2",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.keyed[\"eu-west-1\"]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "index": "eu-west-1",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "eu-west-1",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.keyed[\"quote\\\"d\"]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "index": "quote\"d",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "quote\"d",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.keyed[\"us-east-1\"]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "index": "us-east-1",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "us-east-1",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.keyed[\"with space\"]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "index": "with space",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "with space",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.keyed[\"ünïcode-é\"]",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "index": "ünïcode-é",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "ünïcode-é",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "terraform_data.counted[0]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "counted",
+      "index": 0,
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "item-0",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.counted[1]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "counted",
+      "index": 1,
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "item-1",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.counted[2]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "counted",
+      "index": 2,
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "item-2",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.keyed[\"eu-west-1\"]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "keyed",
+      "index": "eu-west-1",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "eu-west-1",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.keyed[\"quote\\\"d\"]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "keyed",
+      "index": "quote\"d",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "quote\"d",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.keyed[\"us-east-1\"]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "keyed",
+      "index": "us-east-1",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "us-east-1",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.keyed[\"with space\"]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "keyed",
+      "index": "with space",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "with space",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.keyed[\"ünïcode-é\"]",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "keyed",
+      "index": "ünïcode-é",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "ünïcode-é",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "configuration": {
+    "provider_config": {
+      "terraform": {
+        "name": "terraform",
+        "full_name": "terraform.io/builtin/terraform"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "terraform_data.counted",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "counted",
+          "provider_config_key": "terraform",
+          "expressions": {
+            "input": {
+              "references": [
+                "count.index"
+              ]
+            }
+          },
+          "schema_version": 0,
+          "count_expression": {
+            "constant_value": 3
+          }
+        },
+        {
+          "address": "terraform_data.keyed",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "keyed",
+          "provider_config_key": "terraform",
+          "expressions": {
+            "input": {
+              "references": [
+                "each.key"
+              ]
+            }
+          },
+          "schema_version": 0
+        }
+      ]
+    }
+  },
+  "errored": false
+}

@@ -1,0 +1,103 @@
+TERRAFORM PLAN SUMMARY
+==================================================
+
+Terraform Version: 1.17.2
+
+SUMMARY
+--------------------------------------------------
+
+Total Changes: 9
+
+  Add:     5
+  Change:  2
+  Destroy: 1
+  Replace: 1
+
+RESOURCES BY CHANGE TYPE
+--------------------------------------------------
+
+To Add (5)
+
+  Resource Type            Resource Name
+  ------------------------ ---------------
+  aws_instance             main
+  azurerm_resource_group   main
+  cloudflare_record        main
+  datadog_monitor          main
+  google_storage_bucket    main
+
+To Change (2)
+
+  Resource Type           Resource Name
+  ----------------------- ---------------
+  aws_s3_bucket           main
+  kubernetes_deployment   main
+
+To Replace (1)
+
+  Resource Type                   Resource Name
+  ------------------------------- ---------------
+  azurerm_linux_virtual_machine   main
+
+To Destroy (1)
+
+  Resource Type             Resource Name
+  ------------------------- ---------------
+  google_compute_instance   main
+
+CHANGES BY RESOURCE TYPE
+--------------------------------------------------
+
+aws_instance (1)
+
+  Resource Type  Resource Name   Change Type
+  -------------- --------------- -------------
+  aws_instance   main            To Add
+
+aws_s3_bucket (1)
+
+  Resource Type   Resource Name   Change Type
+  --------------- --------------- -------------
+  aws_s3_bucket   main            To Change
+
+azurerm_linux_virtual_machine (1)
+
+  Resource Type                   Resource Name   Change Type
+  ------------------------------- --------------- -------------
+  azurerm_linux_virtual_machine   main            To Replace
+
+azurerm_resource_group (1)
+
+  Resource Type            Resource Name   Change Type
+  ------------------------ --------------- -------------
+  azurerm_resource_group   main            To Add
+
+cloudflare_record (1)
+
+  Resource Type       Resource Name   Change Type
+  ------------------- --------------- -------------
+  cloudflare_record   main            To Add
+
+datadog_monitor (1)
+
+  Resource Type     Resource Name   Change Type
+  ----------------- --------------- -------------
+  datadog_monitor   main            To Add
+
+google_compute_instance (1)
+
+  Resource Type             Resource Name   Change Type
+  ------------------------- --------------- -------------
+  google_compute_instance   main            To Destroy
+
+google_storage_bucket (1)
+
+  Resource Type           Resource Name   Change Type
+  ----------------------- --------------- -------------
+  google_storage_bucket   main            To Add
+
+kubernetes_deployment (1)
+
+  Resource Type           Resource Name   Change Type
+  ----------------------- --------------- -------------
+  kubernetes_deployment   main            To Change

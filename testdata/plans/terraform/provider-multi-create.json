@@ -1,0 +1,557 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.10.5",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_s3_bucket.data",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "data",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "synthetic-data-bucket",
+            "force_destroy": false,
+            "tags": null,
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "cors_rule": [],
+            "grant": [],
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "replication_configuration": [],
+            "server_side_encryption_configuration": [],
+            "tags_all": {},
+            "versioning": [],
+            "website": []
+          }
+        },
+        {
+          "address": "github_repository.app",
+          "mode": "managed",
+          "type": "github_repository",
+          "name": "app",
+          "provider_name": "registry.terraform.io/integrations/github",
+          "schema_version": 1,
+          "values": {
+            "allow_auto_merge": false,
+            "allow_merge_commit": true,
+            "allow_rebase_merge": true,
+            "allow_squash_merge": true,
+            "allow_update_branch": null,
+            "archive_on_destroy": null,
+            "archived": false,
+            "auto_init": null,
+            "delete_branch_on_merge": false,
+            "description": null,
+            "gitignore_template": null,
+            "has_discussions": null,
+            "has_downloads": null,
+            "has_issues": null,
+            "has_projects": null,
+            "has_wiki": null,
+            "homepage_url": null,
+            "ignore_vulnerability_alerts_during_read": null,
+            "is_template": null,
+            "license_template": null,
+            "merge_commit_message": "PR_TITLE",
+            "merge_commit_title": "MERGE_MESSAGE",
+            "name": "synthetic-app",
+            "pages": [],
+            "squash_merge_commit_message": "COMMIT_MESSAGES",
+            "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+            "template": [],
+            "visibility": "private",
+            "vulnerability_alerts": null,
+            "web_commit_signoff_required": false
+          },
+          "sensitive_values": {
+            "pages": [],
+            "security_and_analysis": [],
+            "template": [],
+            "topics": []
+          }
+        },
+        {
+          "address": "google_storage_bucket.data",
+          "mode": "managed",
+          "type": "google_storage_bucket",
+          "name": "data",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 3,
+          "values": {
+            "autoclass": [],
+            "cors": [],
+            "custom_placement_config": [],
+            "default_event_based_hold": null,
+            "effective_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "enable_object_retention": null,
+            "encryption": [],
+            "force_destroy": false,
+            "hierarchical_namespace": [],
+            "ip_filter": [],
+            "labels": null,
+            "lifecycle_rule": [],
+            "location": "EU",
+            "logging": [],
+            "name": "synthetic-data-bucket",
+            "requester_pays": null,
+            "retention_policy": [],
+            "storage_class": "STANDARD",
+            "terraform_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "autoclass": [],
+            "cors": [],
+            "custom_placement_config": [],
+            "effective_labels": {},
+            "encryption": [],
+            "hierarchical_namespace": [],
+            "ip_filter": [],
+            "lifecycle_rule": [],
+            "logging": [],
+            "retention_policy": [],
+            "soft_delete_policy": [],
+            "terraform_labels": {},
+            "versioning": [],
+            "website": []
+          }
+        },
+        {
+          "address": "kubernetes_namespace.app",
+          "mode": "managed",
+          "type": "kubernetes_namespace",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/kubernetes",
+          "schema_version": 0,
+          "values": {
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": null,
+                "labels": null,
+                "name": "synthetic-app"
+              }
+            ],
+            "timeouts": null,
+            "wait_for_default_service_account": false
+          },
+          "sensitive_values": {
+            "metadata": [
+              {}
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.data",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "synthetic-data-bucket",
+          "force_destroy": false,
+          "tags": null,
+          "timeouts": null
+        },
+        "after_unknown": {
+          "acceleration_status": true,
+          "acl": true,
+          "arn": true,
+          "bucket_domain_name": true,
+          "bucket_prefix": true,
+          "bucket_regional_domain_name": true,
+          "cors_rule": true,
+          "grant": true,
+          "hosted_zone_id": true,
+          "id": true,
+          "lifecycle_rule": true,
+          "logging": true,
+          "object_lock_configuration": true,
+          "object_lock_enabled": true,
+          "policy": true,
+          "region": true,
+          "replication_configuration": true,
+          "request_payer": true,
+          "server_side_encryption_configuration": true,
+          "tags_all": true,
+          "versioning": true,
+          "website": true,
+          "website_domain": true,
+          "website_endpoint": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "cors_rule": [],
+          "grant": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [],
+          "tags_all": {},
+          "versioning": [],
+          "website": []
+        }
+      }
+    },
+    {
+      "address": "github_repository.app",
+      "mode": "managed",
+      "type": "github_repository",
+      "name": "app",
+      "provider_name": "registry.terraform.io/integrations/github",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "allow_auto_merge": false,
+          "allow_merge_commit": true,
+          "allow_rebase_merge": true,
+          "allow_squash_merge": true,
+          "allow_update_branch": null,
+          "archive_on_destroy": null,
+          "archived": false,
+          "auto_init": null,
+          "delete_branch_on_merge": false,
+          "description": null,
+          "gitignore_template": null,
+          "has_discussions": null,
+          "has_downloads": null,
+          "has_issues": null,
+          "has_projects": null,
+          "has_wiki": null,
+          "homepage_url": null,
+          "ignore_vulnerability_alerts_during_read": null,
+          "is_template": null,
+          "license_template": null,
+          "merge_commit_message": "PR_TITLE",
+          "merge_commit_title": "MERGE_MESSAGE",
+          "name": "synthetic-app",
+          "pages": [],
+          "squash_merge_commit_message": "COMMIT_MESSAGES",
+          "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+          "template": [],
+          "visibility": "private",
+          "vulnerability_alerts": null,
+          "web_commit_signoff_required": false
+        },
+        "after_unknown": {
+          "default_branch": true,
+          "etag": true,
+          "full_name": true,
+          "git_clone_url": true,
+          "html_url": true,
+          "http_clone_url": true,
+          "id": true,
+          "node_id": true,
+          "pages": [],
+          "primary_language": true,
+          "private": true,
+          "repo_id": true,
+          "security_and_analysis": true,
+          "ssh_clone_url": true,
+          "svn_url": true,
+          "template": [],
+          "topics": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "pages": [],
+          "security_and_analysis": [],
+          "template": [],
+          "topics": []
+        }
+      }
+    },
+    {
+      "address": "google_storage_bucket.data",
+      "mode": "managed",
+      "type": "google_storage_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "autoclass": [],
+          "cors": [],
+          "custom_placement_config": [],
+          "default_event_based_hold": null,
+          "effective_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "enable_object_retention": null,
+          "encryption": [],
+          "force_destroy": false,
+          "hierarchical_namespace": [],
+          "ip_filter": [],
+          "labels": null,
+          "lifecycle_rule": [],
+          "location": "EU",
+          "logging": [],
+          "name": "synthetic-data-bucket",
+          "requester_pays": null,
+          "retention_policy": [],
+          "storage_class": "STANDARD",
+          "terraform_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "timeouts": null
+        },
+        "after_unknown": {
+          "autoclass": [],
+          "cors": [],
+          "custom_placement_config": [],
+          "effective_labels": {},
+          "encryption": [],
+          "hierarchical_namespace": [],
+          "id": true,
+          "ip_filter": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "project": true,
+          "project_number": true,
+          "public_access_prevention": true,
+          "retention_policy": [],
+          "rpo": true,
+          "self_link": true,
+          "soft_delete_policy": true,
+          "terraform_labels": {},
+          "time_created": true,
+          "uniform_bucket_level_access": true,
+          "updated": true,
+          "url": true,
+          "versioning": true,
+          "website": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "autoclass": [],
+          "cors": [],
+          "custom_placement_config": [],
+          "effective_labels": {},
+          "encryption": [],
+          "hierarchical_namespace": [],
+          "ip_filter": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "retention_policy": [],
+          "soft_delete_policy": [],
+          "terraform_labels": {},
+          "versioning": [],
+          "website": []
+        }
+      }
+    },
+    {
+      "address": "kubernetes_namespace.app",
+      "mode": "managed",
+      "type": "kubernetes_namespace",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/kubernetes",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "metadata": [
+            {
+              "annotations": null,
+              "generate_name": null,
+              "labels": null,
+              "name": "synthetic-app"
+            }
+          ],
+          "timeouts": null,
+          "wait_for_default_service_account": false
+        },
+        "after_unknown": {
+          "id": true,
+          "metadata": [
+            {
+              "generation": true,
+              "resource_version": true,
+              "uid": true
+            }
+          ]
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "metadata": [
+            {}
+          ]
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "5.100.0",
+        "expressions": {
+          "access_key": {
+            "constant_value": "SYNTHETIC"
+          },
+          "region": {
+            "constant_value": "eu-west-1"
+          },
+          "secret_key": {
+            "constant_value": "SYNTHETIC"
+          },
+          "skip_credentials_validation": {
+            "constant_value": true
+          },
+          "skip_metadata_api_check": {
+            "constant_value": true
+          },
+          "skip_region_validation": {
+            "constant_value": true
+          },
+          "skip_requesting_account_id": {
+            "constant_value": true
+          }
+        }
+      },
+      "github": {
+        "name": "github",
+        "full_name": "registry.terraform.io/integrations/github",
+        "version_constraint": "6.6.0",
+        "expressions": {
+          "owner": {
+            "constant_value": "synthetic-org"
+          },
+          "token": {
+            "constant_value": "SYNTHETIC"
+          }
+        }
+      },
+      "google": {
+        "name": "google",
+        "full_name": "registry.terraform.io/hashicorp/google",
+        "version_constraint": "6.50.0",
+        "expressions": {
+          "access_token": {
+            "constant_value": "SYNTHETIC"
+          },
+          "project": {
+            "constant_value": "synthetic-project"
+          },
+          "region": {
+            "constant_value": "europe-west1"
+          }
+        }
+      },
+      "kubernetes": {
+        "name": "kubernetes",
+        "full_name": "registry.terraform.io/hashicorp/kubernetes",
+        "version_constraint": "2.38.0",
+        "expressions": {
+          "host": {
+            "constant_value": "https://127.0.0.1:1"
+          },
+          "insecure": {
+            "constant_value": true
+          },
+          "token": {
+            "constant_value": "SYNTHETIC"
+          }
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_s3_bucket.data",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "data",
+          "provider_config_key": "aws",
+          "expressions": {
+            "bucket": {
+              "constant_value": "synthetic-data-bucket"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "github_repository.app",
+          "mode": "managed",
+          "type": "github_repository",
+          "name": "app",
+          "provider_config_key": "github",
+          "expressions": {
+            "name": {
+              "constant_value": "synthetic-app"
+            },
+            "visibility": {
+              "constant_value": "private"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "google_storage_bucket.data",
+          "mode": "managed",
+          "type": "google_storage_bucket",
+          "name": "data",
+          "provider_config_key": "google",
+          "expressions": {
+            "location": {
+              "constant_value": "EU"
+            },
+            "name": {
+              "constant_value": "synthetic-data-bucket"
+            }
+          },
+          "schema_version": 3
+        },
+        {
+          "address": "kubernetes_namespace.app",
+          "mode": "managed",
+          "type": "kubernetes_namespace",
+          "name": "app",
+          "provider_config_key": "kubernetes",
+          "expressions": {
+            "metadata": [
+              {
+                "name": {
+                  "constant_value": "synthetic-app"
+                }
+              }
+            ]
+          },
+          "schema_version": 0
+        }
+      ]
+    }
+  },
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}

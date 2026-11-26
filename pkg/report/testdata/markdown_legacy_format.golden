@@ -1,0 +1,41 @@
+# Terraform Plan Summary
+
+**Terraform Version:** 0.12.31
+
+## Summary
+
+**Total Changes:** 2
+
+| Action | Count |
+|--------|-------|
+| Add | 1 |
+| Destroy | 1 |
+
+## Resources by Change Type
+
+### To Add (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_instance` | `web` |
+
+### To Destroy (1)
+
+| Resource Type | Resource Name |
+|---------------|---------------|
+| `aws_s3_bucket` | `logs` |
+
+## Changes by Resource Type
+
+### aws_instance (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_instance` | `web` | To Add |
+
+### aws_s3_bucket (1)
+
+| Resource Type | Resource Name | Change Type |
+|---------------|---------------|-------------|
+| `aws_s3_bucket` | `logs` | To Destroy |
+

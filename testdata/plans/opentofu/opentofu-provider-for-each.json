@@ -1,0 +1,175 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "random_pet.region[\"eu\"]",
+          "mode": "managed",
+          "type": "random_pet",
+          "name": "region",
+          "index": "eu",
+          "provider_name": "registry.opentofu.org/hashicorp/random",
+          "schema_version": 0,
+          "values": {
+            "keepers": null,
+            "length": 2,
+            "prefix": null,
+            "separator": "-"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "random_pet.region[\"us\"]",
+          "mode": "managed",
+          "type": "random_pet",
+          "name": "region",
+          "index": "us",
+          "provider_name": "registry.opentofu.org/hashicorp/random",
+          "schema_version": 0,
+          "values": {
+            "keepers": null,
+            "length": 2,
+            "prefix": null,
+            "separator": "-"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "terraform_data.anchor",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "anchor",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": "x",
+            "triggers_replace": null
+          },
+          "sensitive_values": {}
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "random_pet.region[\"eu\"]",
+      "mode": "managed",
+      "type": "random_pet",
+      "name": "region",
+      "index": "eu",
+      "provider_name": "registry.opentofu.org/hashicorp/random",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "keepers": null,
+          "length": 2,
+          "prefix": null,
+          "separator": "-"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "random_pet.region[\"us\"]",
+      "mode": "managed",
+      "type": "random_pet",
+      "name": "region",
+      "index": "us",
+      "provider_name": "registry.opentofu.org/hashicorp/random",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "keepers": null,
+          "length": 2,
+          "prefix": null,
+          "separator": "-"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "terraform_data.anchor",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "anchor",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "input": "x",
+          "triggers_replace": null
+        },
+        "after_unknown": {
+          "id": true,
+          "output": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "configuration": {
+    "provider_config": {
+      "random": {
+        "name": "random",
+        "full_name": "registry.opentofu.org/hashicorp/random",
+        "version_constraint": "3.7.2"
+      },
+      "random.region": {
+        "name": "random",
+        "full_name": "registry.opentofu.org/hashicorp/random",
+        "alias": "region",
+        "version_constraint": "3.7.2"
+      },
+      "terraform": {
+        "name": "terraform",
+        "full_name": "terraform.io/builtin/terraform"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "random_pet.region",
+          "mode": "managed",
+          "type": "random_pet",
+          "name": "region",
+          "provider_config_key": "random.region",
+          "schema_version": 0
+        },
+        {
+          "address": "terraform_data.anchor",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "anchor",
+          "provider_config_key": "terraform",
+          "expressions": {
+            "input": {
+              "constant_value": "x"
+            }
+          },
+          "schema_version": 0
+        }
+      ]
+    }
+  },
+  "errored": false
+}

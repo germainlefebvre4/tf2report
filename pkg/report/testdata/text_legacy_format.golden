@@ -1,0 +1,42 @@
+TERRAFORM PLAN SUMMARY
+==================================================
+
+Terraform Version: 0.12.31
+
+SUMMARY
+--------------------------------------------------
+
+Total Changes: 2
+
+  Add:     1
+  Destroy: 1
+
+RESOURCES BY CHANGE TYPE
+--------------------------------------------------
+
+To Add (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_instance    web
+
+To Destroy (1)
+
+  Resource Type   Resource Name
+  --------------- ---------------
+  aws_s3_bucket   logs
+
+CHANGES BY RESOURCE TYPE
+--------------------------------------------------
+
+aws_instance (1)
+
+  Resource Type  Resource Name   Change Type
+  -------------- --------------- -------------
+  aws_instance   web             To Add
+
+aws_s3_bucket (1)
+
+  Resource Type   Resource Name   Change Type
+  --------------- --------------- -------------
+  aws_s3_bucket   logs            To Destroy

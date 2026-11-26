@@ -1,0 +1,114 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.10.5",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "terraform_data.cbd",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "cbd",
+          "provider_name": "terraform.io/builtin/terraform",
+          "schema_version": 0,
+          "values": {
+            "input": null,
+            "output": null,
+            "triggers_replace": "after"
+          },
+          "sensitive_values": {}
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "terraform_data.cbd",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "cbd",
+      "provider_name": "terraform.io/builtin/terraform",
+      "change": {
+        "actions": [
+          "create",
+          "delete"
+        ],
+        "before": {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "input": null,
+          "output": null,
+          "triggers_replace": "before"
+        },
+        "after": {
+          "input": null,
+          "output": null,
+          "triggers_replace": "after"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "replace_paths": [
+          [
+            "triggers_replace"
+          ]
+        ]
+      },
+      "action_reason": "replace_because_cannot_update"
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.10.5",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "terraform_data.cbd",
+            "mode": "managed",
+            "type": "terraform_data",
+            "name": "cbd",
+            "provider_name": "terraform.io/builtin/terraform",
+            "schema_version": 0,
+            "values": {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "input": null,
+              "output": null,
+              "triggers_replace": "before"
+            },
+            "sensitive_values": {}
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "terraform": {
+        "name": "terraform",
+        "full_name": "terraform.io/builtin/terraform"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "terraform_data.cbd",
+          "mode": "managed",
+          "type": "terraform_data",
+          "name": "cbd",
+          "provider_config_key": "terraform",
+          "expressions": {
+            "triggers_replace": {
+              "constant_value": "after"
+            }
+          },
+          "schema_version": 0
+        }
+      ]
+    }
+  },
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}

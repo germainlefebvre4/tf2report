@@ -1,0 +1,46 @@
+{
+  "terraform_version": "0.12.31",
+  "summary": {
+    "total_changes": 2,
+    "to_add": 1,
+    "to_change": 0,
+    "to_destroy": 1,
+    "to_replace": 0
+  },
+  "changes": [
+    {
+      "address": "aws_instance.web",
+      "type": "aws_instance",
+      "name": "web",
+      "action": "create"
+    },
+    {
+      "address": "aws_s3_bucket.logs",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "action": "delete"
+    }
+  ],
+  "by_type": {
+    "aws_instance": {
+      "type": "aws_instance",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "aws_instance.web"
+      ]
+    },
+    "aws_s3_bucket": {
+      "type": "aws_s3_bucket",
+      "to_add": 0,
+      "to_change": 0,
+      "to_destroy": 1,
+      "to_replace": 0,
+      "resources": [
+        "aws_s3_bucket.logs"
+      ]
+    }
+  }
+}
