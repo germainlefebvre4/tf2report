@@ -1,0 +1,158 @@
+{
+  "terraform_version": "1.17.2",
+  "summary": {
+    "total_changes": 9,
+    "to_add": 5,
+    "to_change": 2,
+    "to_destroy": 1,
+    "to_replace": 1
+  },
+  "changes": [
+    {
+      "address": "aws_instance.main",
+      "type": "aws_instance",
+      "name": "main",
+      "action": "create"
+    },
+    {
+      "address": "aws_s3_bucket.main",
+      "type": "aws_s3_bucket",
+      "name": "main",
+      "action": "update"
+    },
+    {
+      "address": "azurerm_resource_group.main",
+      "type": "azurerm_resource_group",
+      "name": "main",
+      "action": "create"
+    },
+    {
+      "address": "azurerm_linux_virtual_machine.main",
+      "type": "azurerm_linux_virtual_machine",
+      "name": "main",
+      "action": "replace"
+    },
+    {
+      "address": "google_compute_instance.main",
+      "type": "google_compute_instance",
+      "name": "main",
+      "action": "delete"
+    },
+    {
+      "address": "google_storage_bucket.main",
+      "type": "google_storage_bucket",
+      "name": "main",
+      "action": "create"
+    },
+    {
+      "address": "kubernetes_deployment.main",
+      "type": "kubernetes_deployment",
+      "name": "main",
+      "action": "update"
+    },
+    {
+      "address": "datadog_monitor.main",
+      "type": "datadog_monitor",
+      "name": "main",
+      "action": "create"
+    },
+    {
+      "address": "module.edge.cloudflare_record.main",
+      "type": "cloudflare_record",
+      "name": "main",
+      "action": "create"
+    }
+  ],
+  "by_type": {
+    "aws_instance": {
+      "type": "aws_instance",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "aws_instance.main"
+      ]
+    },
+    "aws_s3_bucket": {
+      "type": "aws_s3_bucket",
+      "to_add": 0,
+      "to_change": 1,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "aws_s3_bucket.main"
+      ]
+    },
+    "azurerm_linux_virtual_machine": {
+      "type": "azurerm_linux_virtual_machine",
+      "to_add": 0,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 1,
+      "resources": [
+        "azurerm_linux_virtual_machine.main"
+      ]
+    },
+    "azurerm_resource_group": {
+      "type": "azurerm_resource_group",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "azurerm_resource_group.main"
+      ]
+    },
+    "cloudflare_record": {
+      "type": "cloudflare_record",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "module.edge.cloudflare_record.main"
+      ]
+    },
+    "datadog_monitor": {
+      "type": "datadog_monitor",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "datadog_monitor.main"
+      ]
+    },
+    "google_compute_instance": {
+      "type": "google_compute_instance",
+      "to_add": 0,
+      "to_change": 0,
+      "to_destroy": 1,
+      "to_replace": 0,
+      "resources": [
+        "google_compute_instance.main"
+      ]
+    },
+    "google_storage_bucket": {
+      "type": "google_storage_bucket",
+      "to_add": 1,
+      "to_change": 0,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "google_storage_bucket.main"
+      ]
+    },
+    "kubernetes_deployment": {
+      "type": "kubernetes_deployment",
+      "to_add": 0,
+      "to_change": 1,
+      "to_destroy": 0,
+      "to_replace": 0,
+      "resources": [
+        "kubernetes_deployment.main"
+      ]
+    }
+  }
+}

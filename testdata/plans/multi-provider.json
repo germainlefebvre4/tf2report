@@ -1,0 +1,175 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.17.2",
+  "resource_changes": [
+    {
+      "address": "aws_instance.main",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "instance_type": "t3.micro"
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.main",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "acl": "private"
+        },
+        "after": {
+          "acl": "public-read"
+        }
+      }
+    },
+    {
+      "address": "azurerm_resource_group.main",
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "westeurope"
+        }
+      }
+    },
+    {
+      "address": "azurerm_linux_virtual_machine.main",
+      "mode": "managed",
+      "type": "azurerm_linux_virtual_machine",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "size": "Standard_B1s"
+        },
+        "after": {
+          "size": "Standard_B2s"
+        }
+      }
+    },
+    {
+      "address": "google_compute_instance.main",
+      "mode": "managed",
+      "type": "google_compute_instance",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "machine_type": "e2-micro"
+        },
+        "after": null
+      }
+    },
+    {
+      "address": "google_storage_bucket.main",
+      "mode": "managed",
+      "type": "google_storage_bucket",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "EU"
+        }
+      }
+    },
+    {
+      "address": "kubernetes_deployment.main",
+      "mode": "managed",
+      "type": "kubernetes_deployment",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/kubernetes",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "replicas": 1
+        },
+        "after": {
+          "replicas": 3
+        }
+      }
+    },
+    {
+      "address": "datadog_monitor.main",
+      "mode": "managed",
+      "type": "datadog_monitor",
+      "name": "main",
+      "provider_name": "registry.terraform.io/datadog/datadog",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-monitor"
+        }
+      }
+    },
+    {
+      "address": "module.edge.cloudflare_record.main",
+      "mode": "managed",
+      "type": "cloudflare_record",
+      "name": "main",
+      "provider_name": "registry.terraform.io/cloudflare/cloudflare",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "type": "A"
+        }
+      }
+    },
+    {
+      "address": "aws_instance.untouched",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "untouched",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "instance_type": "t3.micro"
+        },
+        "after": {
+          "instance_type": "t3.micro"
+        }
+      }
+    }
+  ]
+}

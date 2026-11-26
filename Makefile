@@ -96,7 +96,12 @@ deps:
 # Run the application
 .PHONY: run
 run: build
-	./$(BUILD_DIR)/$(BINARY_NAME)
+	./$(BUILD_DIR)/$(BINARY_NAME) --plan examples/sample-plan.json
+
+# Regenerate the authentic plan fixtures in testdata/plans/terraform (needs terraform and jq)
+.PHONY: fixtures
+fixtures:
+	./scripts/gen-plans.sh
 
 # Build for multiple platforms
 .PHONY: release
@@ -143,6 +148,7 @@ help:
 	@echo "  tidy         - Tidy Go modules"
 	@echo "  verify       - Verify dependencies"
 	@echo "  deps         - Download dependencies"
-	@echo "  run          - Build and run the application"
+	@echo "  run          - Build and run the application on examples/sample-plan.json"
+	@echo "  fixtures     - Regenerate testdata/plans/terraform with terraform and jq"
 	@echo "  release      - Build for multiple platforms"
 	@echo "  help         - Show this help message"

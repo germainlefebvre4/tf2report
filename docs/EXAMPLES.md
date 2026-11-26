@@ -11,6 +11,9 @@ terraform plan -out=tfplan
 terraform show -json tfplan > terraform.tfplan.json
 ```
 
+To try the tool without a Terraform project, use the plans in the `examples/` directory, for example
+`tf2report --plan examples/sample-plan.json`. `examples/README.md` lists what each plan shows.
+
 ## Basic Examples
 
 ### Generate Default Markdown Report
