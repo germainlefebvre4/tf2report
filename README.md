@@ -10,7 +10,8 @@ Summarize Terraform plan changes into human-readable reports.
 
 - Parse Terraform plan files in JSON format
 - Extract and summarize resource changes
-- Multiple output formats: Markdown, plain text, JSON
+- Multiple output formats: Markdown, plain text, JSON, SVG diagram
+- SVG architecture diagram with provider and module containers, dependency arrows, status legend and icons
 - Filter by resource type and change action
 - Configuration file support
 - CI/CD integration friendly
@@ -97,7 +98,40 @@ tf2report --plan terraform.tfplan.json --format text
 
 # JSON
 tf2report --plan terraform.tfplan.json --format json
+
+# SVG diagram
+tf2report --plan terraform.tfplan.json --format svg > diagram.svg
 ```
+
+### SVG diagram
+
+Each status is shown by color, symbol and border style, never by color alone:
+
+| Status | Color | Symbol | Border |
+|--------|-------|--------|--------|
+| create | green | `+` | solid |
+| update | orange | `~` | dashed |
+| delete | red | `-` | dotted |
+| replace | purple | `-/+` | dash-dot |
+| no-op | grey, muted | none | thin solid |
+
+What is drawn depends on the filters:
+
+| `--type` | `--action` | create, update, delete, replace | no-op | Dependency context |
+|----------|------------|---------------------------------|-------|--------------------|
+| not given | not given | all | no | yes, one hop, muted |
+| given | not given | matching types | no | no |
+| any | given | matching, among those left after filtering | only if `no-op` is in the list | no |
+
+Use `--icons-dir <dir>` to supply your own icons (see `docs/USAGE.md`).
+
+Limits:
+
+- No isometric rendering and no PNG export: the output is one 2D SVG document.
+- A reference to a module output points to the module container, not to the producing resource.
+- Deleted resources have no arrows, because their relations are no longer in the configuration.
+- Data sources are never drawn. Arrows towards resources that are not drawn are omitted.
+- The diagram carries addresses, types, names, providers and statuses only, never attribute values.
 
 ### Filtering
 
@@ -138,9 +172,10 @@ tf2report
 ## Command-Line Options
 
 - `--plan, -p <path>` - Path to Terraform plan JSON file (required)
-- `--format, -f <format>` - Output format: markdown, text, json (default: markdown)
+- `--format, -f <format>` - Output format: markdown, text, json, svg (default: markdown)
 - `--type, -t <type>` - Filter by resource type (repeatable)
-- `--action, -a <action>` - Filter by action: create, update, delete, replace (repeatable)
+- `--action, -a <action>` - Filter by action: create, update, delete, replace, no-op (repeatable; `no-op` is meaningful for svg)
+- `--icons-dir <dir>` - Directory of SVG icons for the svg format (ignored for other formats)
 - `--config <path>` - Configuration file path (default: ./tf2report.yaml)
 - `--verbose, -v` - Enable verbose output
 - `--help, -h` - Display help

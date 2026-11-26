@@ -26,7 +26,7 @@ The first file found is used.
 # Path to Terraform plan JSON file
 terraform_plan_path: terraform.tfplan.json
 
-# Output format: markdown, text, or json
+# Output format: markdown, text, json, or svg
 output_format: markdown
 
 # Filters for resource selection
@@ -69,8 +69,8 @@ tf2report --plan /path/to/other-plan.json
 
 - **Type:** String
 - **Default:** `markdown`
-- **Valid Values:** `markdown`, `text`, `json`
-- **Description:** Format for the generated report
+- **Valid Values:** `markdown`, `text`, `json`, `svg`
+- **Description:** Format for the generated report. `TF2REPORT_OUTPUT_FORMAT=svg` selects the SVG diagram. `--icons-dir` has no configuration key or environment variable.
 
 **Example:**
 ```yaml
@@ -107,7 +107,7 @@ tf2report --type aws_instance --type aws_s3_bucket
 
 - **Type:** Array of strings
 - **Default:** `[]` (no filtering)
-- **Valid Values:** `create`, `update`, `delete`, `replace`
+- **Valid Values:** `create`, `update`, `delete`, `replace`, `no-op` (only meaningful for the svg format)
 - **Description:** List of actions to include in the report. When empty, all actions are included.
 
 **Example:**

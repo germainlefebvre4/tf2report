@@ -28,6 +28,7 @@ type Plan struct {
     TerraformVersion string
     ResourceChanges  []ResourceChange
     OutputChanges    map[string]Change
+    Configuration    *Configuration // nil when the plan has no configuration section
 }
 ```
 
@@ -203,6 +204,10 @@ filtered := terraform.FilterByAction(
 )
 ```
 
+## pkg/diagram
+
+`diagram.Build(plan, diagram.Options) (*Scene, error)` selects the resources to draw, groups them in provider and module containers, resolves dependency edges and assigns icon families. `diagram.Layout(*Scene)` computes integer coordinates. The Scene has no attribute value and no rendering knowledge; it imports `pkg/terraform` only, and renderers consume it.
+
 ## pkg/report
 
 Generate formatted reports from Terraform plans.
@@ -218,6 +223,7 @@ const (
     FormatMarkdown Format = "markdown"
     FormatText     Format = "text"
     FormatJSON     Format = "json"
+    FormatSVG      Format = "svg"
 )
 ```
 
@@ -250,6 +256,21 @@ if err != nil {
     return err
 }
 ```
+
+#### NewSVGFormatter
+
+```go
+type SVGOptions struct {
+    IconsDir       string
+    TypeFiltered   bool
+    ActionFiltered bool
+    OnSkip         func(file, reason string)
+}
+
+func NewSVGFormatter(opts SVGOptions) *SVGFormatter
+```
+
+Creates the SVG formatter with options. `NewFormatter(FormatSVG)` returns one with default options. An invalid `IconsDir` makes `Format` fail before any output.
 
 #### ParseFormat
 

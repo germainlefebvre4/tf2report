@@ -18,9 +18,10 @@ tf2report --plan <path-to-plan.json>
 
 ### Optional Options
 
-- `--format, -f <format>` - Output format: `markdown` (default), `text`, or `json`
+- `--format, -f <format>` - Output format: `markdown` (default), `text`, `json`, or `svg`
 - `--type, -t <type>` - Filter by resource type (can be specified multiple times)
-- `--action, -a <action>` - Filter by action: `create`, `update`, `delete`, or `replace`
+- `--action, -a <action>` - Filter by action: `create`, `update`, `delete`, `replace`, or `no-op` (unchanged resources, drawn muted by the svg format)
+- `--icons-dir <dir>` - Directory of SVG icons used by the `svg` format only
 - `--config <path>` - Path to configuration file (default: `./tf2report.yaml`)
 - `--verbose, -v` - Enable verbose output for debugging
 
@@ -47,6 +48,59 @@ tf2report --plan terraform.tfplan.json --format text
 ```bash
 tf2report --plan terraform.tfplan.json --format json
 ```
+
+### Generate an SVG Diagram
+
+```bash
+tf2report --plan terraform.tfplan.json --format svg > diagram.svg
+tf2report --plan terraform.tfplan.json --format svg --icons-dir ./icons > diagram.svg
+```
+
+Status legend:
+
+Each status is shown by color, symbol and border style, never by color alone:
+
+| Status | Color | Symbol | Border |
+|--------|-------|--------|--------|
+| create | green | `+` | solid |
+| update | orange | `~` | dashed |
+| delete | red | `-` | dotted |
+| replace | purple | `-/+` | dash-dot |
+| no-op | grey, muted | none | thin solid |
+
+What is drawn:
+
+| `--type` | `--action` | create, update, delete, replace | no-op | Dependency context |
+|----------|------------|---------------------------------|-------|--------------------|
+| not given | not given | all | no | yes, one hop, muted |
+| given | not given | matching types | no | no |
+| any | given | matching, among those left after filtering | only if `no-op` is in the list | no |
+
+#### Icon packs
+
+Each resource gets an icon chosen along a chain: service family, provider family, category
+(`compute`, `network`, `storage`, `database`, `security`), then `generic`. The binary embeds six
+generic glyphs (the five categories and `generic`). Service and provider icons come only from a
+user pack given with `--icons-dir <dir>`:
+
+- One flat directory, read non-recursively; only `*.svg` files are used.
+- File names are family ids: `aws-ec2.svg`, `azure-vm.svg`, `gcp-gce.svg`, `aws.svg`, `azure.svg`,
+  `gcp.svg`, `compute.svg`, `network.svg`, `storage.svg`, `database.svg`, `security.svg`, `generic.svg`.
+- For each resource the first existing file along its chain wins; at each level the pack wins over the built-in glyph.
+- At most 256 KiB per file. Allowed elements: `svg g path rect circle ellipse line polyline polygon defs
+  linearGradient radialGradient stop clipPath title desc`.
+- Rejected content: scripts, `on*` attributes, `<style>`, `<image>`, `<use>`, `<foreignObject>`, external
+  or non-fragment `href`, `url(` or `@import` in `style`, DOCTYPE and entities.
+- A rejected file is skipped (listed with `--verbose`) and the next candidate is used.
+- A missing or unreadable directory is an error before any output. With a format other than `svg`, `--icons-dir` is ignored.
+
+Limits:
+
+- No isometric rendering and no PNG export: the output is one 2D SVG document.
+- A reference to a module output points to the module container, not to the producing resource.
+- Deleted resources have no arrows, because their relations are no longer in the configuration.
+- Data sources are never drawn. Arrows towards resources that are not drawn are omitted.
+- The diagram carries addresses, types, names, providers and statuses only, never attribute values.
 
 ### Filter by Resource Type
 

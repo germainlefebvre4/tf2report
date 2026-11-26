@@ -23,11 +23,13 @@ tf2report/
 │   ├── config/             # Configuration loading
 │   │   ├── loader.go
 │   │   └── types.go
+│   ├── diagram/            # Render-independent Scene and layout
 │   ├── report/             # Report generation
 │   │   ├── formatter.go
 │   │   ├── markdown.go
 │   │   ├── text.go
-│   │   └── json.go
+│   │   ├── json.go
+│   │   └── svg*.go         # SVG renderer and icon loader
 │   └── terraform/          # Terraform plan parsing
 │       ├── parser.go
 │       └── types.go
@@ -159,6 +161,8 @@ Follow the guidelines in `.github/instructions/makefile.instructions.md`:
 2. Implement the `Formatter` interface
 3. Add the format to `NewFormatter()` in `formatter.go`
 4. Update documentation
+
+Renderers that draw a picture consume the `Scene` built by `pkg/diagram` instead of reading the plan directly, so selection, containers, edges and layout are shared and testable without SVG.
 
 ### Adding New Filters
 

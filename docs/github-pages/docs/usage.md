@@ -30,12 +30,13 @@ tf2report --plan terraform.tfplan.json
 
 #### `--format, -f <format>`
 
-Output format: `markdown` (default), `text`, or `json`.
+Output format: `markdown` (default), `text`, `json`, or `svg`.
 
 ```bash
 tf2report --plan terraform.tfplan.json --format markdown
 tf2report --plan terraform.tfplan.json --format text
 tf2report --plan terraform.tfplan.json --format json
+tf2report --plan terraform.tfplan.json --format svg > diagram.svg
 ```
 
 #### `--type, -t <type>`
@@ -49,12 +50,27 @@ tf2report --plan terraform.tfplan.json --type aws_instance --type aws_s3_bucket
 
 #### `--action, -a <action>`
 
-Filter by action: `create`, `update`, `delete`, or `replace`. Can be specified multiple times.
+Filter by action: `create`, `update`, `delete`, `replace`, or `no-op` (unchanged resources, drawn muted by the svg format). Can be specified multiple times.
 
 ```bash
 tf2report --plan terraform.tfplan.json --action create
 tf2report --plan terraform.tfplan.json --action delete --action replace
 ```
+
+#### `--icons-dir <dir>`
+
+Directory of SVG icons for the `svg` format. Read-only and not recursive; ignored with other formats. Icon pack rules:
+
+- One flat directory, read non-recursively; only `*.svg` files are used.
+- File names are family ids: `aws-ec2.svg`, `azure-vm.svg`, `gcp-gce.svg`, `aws.svg`, `azure.svg`,
+  `gcp.svg`, `compute.svg`, `network.svg`, `storage.svg`, `database.svg`, `security.svg`, `generic.svg`.
+- For each resource the first existing file along its chain wins; at each level the pack wins over the built-in glyph.
+- At most 256 KiB per file. Allowed elements: `svg g path rect circle ellipse line polyline polygon defs
+  linearGradient radialGradient stop clipPath title desc`.
+- Rejected content: scripts, `on*` attributes, `<style>`, `<image>`, `<use>`, `<foreignObject>`, external
+  or non-fragment `href`, `url(` or `@import` in `style`, DOCTYPE and entities.
+- A rejected file is skipped (listed with `--verbose`) and the next candidate is used.
+- A missing or unreadable directory is an error before any output. With a format other than `svg`, `--icons-dir` is ignored.
 
 #### `--config <path>`
 
@@ -192,6 +208,30 @@ Perfect for:
 - Automation scripts
 - Metrics collection
 - Custom analysis
+
+## SVG Diagram
+
+```bash
+tf2report --plan terraform.tfplan.json --format svg > diagram.svg
+```
+
+Each status is shown by color, symbol and border style, never by color alone:
+
+| Status | Color | Symbol | Border |
+|--------|-------|--------|--------|
+| create | green | `+` | solid |
+| update | orange | `~` | dashed |
+| delete | red | `-` | dotted |
+| replace | purple | `-/+` | dash-dot |
+| no-op | grey, muted | none | thin solid |
+
+Limits:
+
+- No isometric rendering and no PNG export: the output is one 2D SVG document.
+- A reference to a module output points to the module container, not to the producing resource.
+- Deleted resources have no arrows, because their relations are no longer in the configuration.
+- Data sources are never drawn. Arrows towards resources that are not drawn are omitted.
+- The diagram carries addresses, types, names, providers and statuses only, never attribute values.
 
 ## Filtering
 
