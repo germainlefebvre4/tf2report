@@ -64,7 +64,7 @@ Directory of SVG icons for the `svg` format. Read-only and not recursive; ignore
 - One flat directory, read non-recursively; only `*.svg` files are used.
 - File names are family ids: `aws-ec2.svg`, `azure-vm.svg`, `gcp-gce.svg`, `aws.svg`, `azure.svg`,
   `gcp.svg`, `compute.svg`, `network.svg`, `storage.svg`, `database.svg`, `security.svg`, `generic.svg`.
-- For each resource the first existing file along its chain wins; at each level the pack wins over the built-in glyph.
+- For each resource the first existing file along its chain wins; at each level the pack wins over the embedded service icon, which wins over the built-in glyph.
 - At most 256 KiB per file. Allowed elements: `svg g path rect circle ellipse line polyline polygon defs
   linearGradient radialGradient stop clipPath title desc`.
 - Rejected content: scripts, `on*` attributes, `<style>`, `<image>`, `<use>`, `<foreignObject>`, external

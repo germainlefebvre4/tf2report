@@ -173,3 +173,43 @@ func TestSanitizeIcon_Reserialized(t *testing.T) {
 		t.Errorf("icon = %+v", ic)
 	}
 }
+
+func TestVendorIcons(t *testing.T) {
+	vendor, err := loadVendor()
+	if err != nil {
+		t.Fatalf("loadVendor: %v", err)
+	}
+	counts := map[string]int{}
+	for id := range vendor.icons {
+		counts[id[:strings.Index(id, "-")]]++
+	}
+	for cloud, min := range map[string]int{"aws": 20, "azure": 20, "gcp": 5} {
+		if counts[cloud] < min {
+			t.Errorf("%s vendor icons = %d, want at least %d", cloud, counts[cloud], min)
+		}
+	}
+}
+
+func TestIconSet_VendorBetweenPackAndGlyph(t *testing.T) {
+	chain := []string{"aws-ec2", "aws", "compute", "generic"}
+
+	plain, err := newIconSet("", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if id, _, _ := plain.resolve(chain); id != "aws-ec2" {
+		t.Errorf("without pack resolved %q, want the vendor icon aws-ec2", id)
+	}
+	if id, _, _ := plain.resolve([]string{"aws-unknown", "aws", "compute", "generic"}); id != "compute" {
+		t.Errorf("unknown service resolved %q, want the compute glyph", id)
+	}
+
+	withPack, err := newIconSet(testdataIcons("valid"), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	id, ic, _ := withPack.resolve(chain)
+	if _, fromPack := withPack.pack.icons[id]; !fromPack || ic.inner != withPack.pack.icons["aws-ec2"].inner {
+		t.Errorf("user pack must win over the vendor icon")
+	}
+}

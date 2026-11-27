@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -14,8 +15,15 @@ import (
 	"strings"
 )
 
+// builtinFS holds the original generic glyphs; vendorFS holds the cloud provider
+// icons (selection of official artwork). They live apart because the vendor icons
+// are regenerated over the years by scripts/build-icons.py.
+//
 //go:embed icons/*.svg
 var builtinFS embed.FS
+
+//go:embed icons/vendor/*/*.svg
+var vendorFS embed.FS
 
 // maxIconSize is the largest icon file accepted from a pack.
 const maxIconSize = 256 * 1024
@@ -55,10 +63,11 @@ type iconPack struct {
 	icons map[string]icon
 }
 
-// iconSet resolves a family chain against the user pack first, then the built-in
-// glyphs, at each level.
+// iconSet resolves a family chain at each level against the user pack first, then
+// the embedded vendor icons, then the built-in glyphs.
 type iconSet struct {
 	pack    *iconPack
+	vendor  *iconPack
 	builtin *iconPack
 }
 
@@ -69,7 +78,11 @@ func newIconSet(dir string, onSkip func(file, reason string)) (*iconSet, error) 
 	if err != nil {
 		return nil, err
 	}
-	set := &iconSet{builtin: builtin, pack: &iconPack{icons: map[string]icon{}}}
+	vendor, err := loadVendor()
+	if err != nil {
+		return nil, err
+	}
+	set := &iconSet{builtin: builtin, vendor: vendor, pack: &iconPack{icons: map[string]icon{}}}
 	if dir != "" {
 		pack, err := loadPack(dir, onSkip)
 		if err != nil {
@@ -97,6 +110,31 @@ func loadBuiltin() (*iconPack, error) {
 			return nil, fmt.Errorf("built-in icon %s: %w", e.Name(), err)
 		}
 		pack.icons[id] = ic
+	}
+	return pack, nil
+}
+
+// loadVendor sanitizes the embedded cloud provider icons, keyed by family id.
+func loadVendor() (*iconPack, error) {
+	pack := &iconPack{icons: map[string]icon{}}
+	err := fs.WalkDir(vendorFS, "icons/vendor", func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(path, ".svg") {
+			return err
+		}
+		data, err := vendorFS.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		id := strings.TrimSuffix(d.Name(), ".svg")
+		ic, err := sanitizeIcon(data, id)
+		if err != nil {
+			return fmt.Errorf("vendor icon %s: %w", path, err)
+		}
+		pack.icons[id] = ic
+		return nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("read vendor icons: %w", err)
 	}
 	return pack, nil
 }
@@ -148,7 +186,7 @@ func readLimited(path string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer f.Close() //nolint:errcheck // read-only file, a close failure has no consequence
 	data, err := io.ReadAll(io.LimitReader(f, maxIconSize+1))
 	if err != nil {
 		return nil, err
@@ -166,6 +204,9 @@ func (s *iconSet) resolve(chain []string) (string, icon, bool) {
 		if ic, ok := s.pack.icons[id]; ok {
 			return id, ic, true
 		}
+		if ic, ok := s.vendor.icons[id]; ok {
+			return id, ic, true
+		}
 		if ic, ok := s.builtin.icons[id]; ok {
 			return id, ic, true
 		}
@@ -176,63 +217,82 @@ func (s *iconSet) resolve(chain []string) (string, icon, bool) {
 // sanitizeIcon validates an SVG file against the allowlist and re-serializes it
 // with ids prefixed by the family id. Nothing of the original bytes is copied.
 func sanitizeIcon(data []byte, family string) (icon, error) {
-	dec := xml.NewDecoder(bytes.NewReader(data))
-	dec.Strict = true
-	var out strings.Builder
-	var stack []string
-	viewBox := ""
-	seenRoot := false
+	sz := &sanitizer{dec: xml.NewDecoder(bytes.NewReader(data)), family: family}
+	sz.dec.Strict = true
 	for {
-		tok, err := dec.Token()
+		tok, err := sz.dec.Token()
 		if errors.Is(err, io.EOF) {
 			break
 		}
 		if err != nil {
 			return icon{}, fmt.Errorf("malformed XML: %w", err)
 		}
-		switch t := tok.(type) {
-		case xml.Directive:
-			return icon{}, errors.New("DOCTYPE or entity declaration not allowed")
-		case xml.ProcInst:
-			if t.Target != "xml" {
-				return icon{}, errors.New("processing instruction not allowed")
-			}
-		case xml.StartElement:
-			if len(stack) == 0 {
-				if seenRoot {
-					return icon{}, errors.New("more than one root element")
-				}
-				seenRoot = true
-				if t.Name.Local != "svg" {
-					return icon{}, fmt.Errorf("root element is %q, not svg", t.Name.Local)
-				}
-			}
-			vb, err := writeStart(&out, t, family, len(stack) == 0)
-			if err != nil {
-				return icon{}, err
-			}
-			if len(stack) == 0 {
-				viewBox = vb
-			}
-			stack = append(stack, t.Name.Local)
-		case xml.EndElement:
-			stack = stack[:len(stack)-1]
-			if len(stack) > 0 {
-				out.WriteString("</" + t.Name.Local + ">")
-			}
-		case xml.CharData:
-			if len(stack) > 0 && (stack[len(stack)-1] == "title" || stack[len(stack)-1] == "desc") {
-				_ = xml.EscapeText(&out, t)
-			}
+		if err := sz.token(tok); err != nil {
+			return icon{}, err
 		}
 	}
-	if !seenRoot {
+	if !sz.seenRoot {
 		return icon{}, errors.New("no root element")
 	}
-	if viewBox == "" {
-		viewBox = "0 0 24 24"
+	if sz.viewBox == "" {
+		sz.viewBox = "0 0 24 24"
 	}
-	return icon{viewBox: viewBox, inner: out.String()}, nil
+	return icon{viewBox: sz.viewBox, inner: sz.out.String()}, nil
+}
+
+// sanitizer holds the state of one sanitizeIcon run.
+type sanitizer struct {
+	dec      *xml.Decoder
+	family   string
+	out      strings.Builder
+	stack    []string
+	viewBox  string
+	seenRoot bool
+}
+
+func (z *sanitizer) token(tok xml.Token) error {
+	switch t := tok.(type) {
+	case xml.Directive:
+		return errors.New("DOCTYPE or entity declaration not allowed")
+	case xml.ProcInst:
+		if t.Target != "xml" {
+			return errors.New("processing instruction not allowed")
+		}
+	case xml.StartElement:
+		return z.start(t)
+	case xml.EndElement:
+		z.stack = z.stack[:len(z.stack)-1]
+		if len(z.stack) > 0 {
+			z.out.WriteString("</" + t.Name.Local + ">")
+		}
+	case xml.CharData:
+		if n := len(z.stack); n > 0 && (z.stack[n-1] == "title" || z.stack[n-1] == "desc") {
+			_ = xml.EscapeText(&z.out, t)
+		}
+	}
+	return nil
+}
+
+func (z *sanitizer) start(t xml.StartElement) error {
+	root := len(z.stack) == 0
+	if root {
+		if z.seenRoot {
+			return errors.New("more than one root element")
+		}
+		z.seenRoot = true
+		if t.Name.Local != "svg" {
+			return fmt.Errorf("root element is %q, not svg", t.Name.Local)
+		}
+	}
+	vb, err := writeStart(&z.out, t, z.family, root)
+	if err != nil {
+		return err
+	}
+	if root {
+		z.viewBox = vb
+	}
+	z.stack = append(z.stack, t.Name.Local)
+	return nil
 }
 
 // writeStart validates one start tag and writes its sanitized form. The root svg
@@ -280,7 +340,7 @@ func checkAttr(a xml.Attr, family string) (name, value string, keep bool, err er
 	if strings.HasPrefix(strings.ToLower(name), "on") {
 		return "", "", false, fmt.Errorf("event attribute %q not allowed", name)
 	}
-	if a.Name.Space != "" && !(name == "href" && a.Name.Space == "http://www.w3.org/1999/xlink") {
+	if a.Name.Space != "" && (name != "href" || a.Name.Space != "http://www.w3.org/1999/xlink") {
 		return "", "", false, fmt.Errorf("attribute %s:%s not allowed", a.Name.Space, name)
 	}
 	if !allowedAttrs[name] {

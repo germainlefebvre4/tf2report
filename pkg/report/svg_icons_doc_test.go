@@ -24,14 +24,14 @@ func manyInstances(n int) *terraform.Plan {
 func TestSVG_IconDefinedOnce(t *testing.T) {
 	doc := renderSVG(t, manyInstances(20), SVGOptions{})
 	assertWellFormed(t, doc)
-	if n := strings.Count(doc, `<symbol id="icon-compute"`); n != 1 {
+	if n := strings.Count(doc, `<symbol id="icon-aws-ec2"`); n != 1 {
 		t.Errorf("symbol defined %d times, want 1", n)
 	}
-	if n := strings.Count(doc, `<use href="#icon-compute"`); n != 20 {
+	if n := strings.Count(doc, `<use href="#icon-aws-ec2"`); n != 20 {
 		t.Errorf("use count = %d, want 20", n)
 	}
 	small, large := len(renderSVG(t, manyInstances(10), SVGOptions{})), len(renderSVG(t, manyInstances(20), SVGOptions{}))
-	symbol := len(`<symbol id="icon-compute" viewBox="0 0 24 24"></symbol>`) + 200
+	symbol := len(`<symbol id="icon-aws-ec2" viewBox="0 0 24 24"></symbol>`) + 200
 	if large-small < 10*100 || strings.Count(renderSVG(t, manyInstances(20), SVGOptions{}), "<symbol") != 1 {
 		t.Errorf("document growth looks wrong: %d -> %d (symbol ~%d)", small, large, symbol)
 	}
