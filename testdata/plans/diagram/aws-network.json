@@ -1,0 +1,285 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "aws_vpc.main",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_subnet.private",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-private",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-private"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_instance.web",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-web",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-web"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-web",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-web"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.web",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-web",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-web"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-web",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-web"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.old",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "old",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-old",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-old"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_instance.worker[0]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "worker",
+      "index": 0,
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-worker",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-worker"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_instance.worker[1]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "worker",
+      "index": 1,
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-worker",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-worker"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_vpc.main",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "main",
+          "provider_config_key": "aws",
+          "expressions": {}
+        },
+        {
+          "address": "aws_subnet.private",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "private",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_vpc.main.id",
+                "aws_vpc.main"
+              ]
+            }
+          }
+        },
+        {
+          "address": "aws_instance.web",
+          "mode": "managed",
+          "type": "aws_instance",
+          "name": "web",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_subnet.private.id",
+                "aws_subnet.private"
+              ]
+            },
+            "blk1": [
+              {
+                "inner": {
+                  "references": [
+                    "aws_security_group.web.id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_security_group.web",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "web",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_vpc.main.id",
+                "aws_vpc.main"
+              ]
+            }
+          }
+        },
+        {
+          "address": "aws_instance.worker",
+          "mode": "managed",
+          "type": "aws_instance",
+          "name": "worker",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_subnet.private.id",
+                "aws_subnet.private"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

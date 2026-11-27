@@ -2,11 +2,12 @@
 
 ## Overview
 
-`tf2report` supports three output formats for generating Terraform plan change reports:
+`tf2report` supports four output formats for generating Terraform plan change reports:
 
 - **Markdown** - Human-readable format with tables and sections
 - **Text** - Plain text format for terminal display
 - **JSON** - Structured format for programmatic consumption
+- **SVG** - 2D architecture diagram of the changed resources
 
 ## Markdown Format
 
@@ -124,6 +125,68 @@ Structured JSON output for programmatic analysis and integration with other tool
 tf2report --plan plan.json --format json
 ```
 
+## SVG Format
+
+### Characteristics
+
+- One SVG document on standard output, no external resource, script or font
+- Provider and module containers, one node per resource, dependency arrows, a legend and icons
+- Deterministic: the same plan and options give identical bytes
+- Only addresses, types, names, providers and statuses; never attribute values
+
+### Status cues
+
+Each status is shown by color, symbol and border style, never by color alone:
+
+| Status | Color | Symbol | Border |
+|--------|-------|--------|--------|
+| create | green | `+` | solid |
+| update | orange | `~` | dashed |
+| delete | red | `-` | dotted |
+| replace | purple | `-/+` | dash-dot |
+| no-op | grey, muted | none | thin solid |
+
+### Selection
+
+```bash
+tf2report --plan plan.json --format svg > diagram.svg
+```
+
+### What is drawn
+
+| `--type` | `--action` | create, update, delete, replace | no-op | Dependency context |
+|----------|------------|---------------------------------|-------|--------------------|
+| not given | not given | all | no | yes, one hop, muted |
+| given | not given | matching types | no | no |
+| any | given | matching, among those left after filtering | only if `no-op` is in the list | no |
+
+### Icons
+
+Each resource gets an icon chosen along a chain: service family, provider family, category
+(`compute`, `network`, `storage`, `database`, `security`), then `generic`. The binary embeds six
+generic glyphs (the five categories and `generic`) and a selection of about 60 official AWS, Azure and
+Google Cloud service icons (see `pkg/report/icons/vendor/NOTICE.md`). Other service and provider icons come
+from a user pack given with `--icons-dir <dir>`, which wins over the embedded ones:
+
+- One flat directory, read non-recursively; only `*.svg` files are used.
+- File names are family ids: `aws-ec2.svg`, `azure-vm.svg`, `gcp-gce.svg`, `aws.svg`, `azure.svg`,
+  `gcp.svg`, `compute.svg`, `network.svg`, `storage.svg`, `database.svg`, `security.svg`, `generic.svg`.
+- For each resource the first existing file along its chain wins; at each level the pack wins over the embedded service icon, which wins over the built-in glyph.
+- At most 256 KiB per file. Allowed elements: `svg g path rect circle ellipse line polyline polygon defs
+  linearGradient radialGradient stop clipPath title desc`.
+- Rejected content: scripts, `on*` attributes, `<style>`, `<image>`, `<use>`, `<foreignObject>`, external
+  or non-fragment `href`, `url(` or `@import` in `style`, DOCTYPE and entities.
+- A rejected file is skipped (listed with `--verbose`) and the next candidate is used.
+- A missing or unreadable directory is an error before any output. With a format other than `svg`, `--icons-dir` is ignored.
+
+### Limits
+
+- No isometric rendering and no PNG export: the output is one 2D SVG document.
+- A reference to a module output points to the module container, not to the producing resource.
+- Deleted resources have no arrows, because their relations are no longer in the configuration.
+- Data sources are never drawn. Arrows towards resources that are not drawn are omitted.
+- The diagram carries addresses, types, names, providers and statuses only, never attribute values.
+
 ## Format Selection
 
 ### Via Command Line
@@ -137,6 +200,9 @@ tf2report --plan plan.json --format text
 
 # JSON
 tf2report --plan plan.json --format json
+
+# SVG
+tf2report --plan plan.json --format svg > diagram.svg
 ```
 
 ### Via Configuration File

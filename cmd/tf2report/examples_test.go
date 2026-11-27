@@ -18,6 +18,7 @@ var exampleSources = map[string]string{
 	"imported-resource.json":             "terraform/import.json",
 	"no-changes.json":                    "terraform/no-changes.json",
 	"empty-config.json":                  "terraform/empty-config.json",
+	"svg-network.json":                   "diagram/aws-network.json",
 }
 
 func examplePath(t *testing.T, name string) string {

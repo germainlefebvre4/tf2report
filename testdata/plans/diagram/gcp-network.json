@@ -1,0 +1,206 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "google_compute_network.main",
+      "mode": "managed",
+      "type": "google_compute_network",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-main",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-main"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "google_compute_subnetwork.app",
+      "mode": "managed",
+      "type": "google_compute_subnetwork",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "google_compute_instance.app",
+      "mode": "managed",
+      "type": "google_compute_instance",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-app",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-app"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "google_storage_bucket.data",
+      "mode": "managed",
+      "type": "google_storage_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "name": "SYNTHETIC-DIAGRAM-OLD-data",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-data"
+        },
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-data",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-data"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {
+          "secret": true
+        },
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "google_sql_database_instance.db",
+      "mode": "managed",
+      "type": "google_sql_database_instance",
+      "name": "db",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-db",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-db"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "google_compute_network.main",
+          "mode": "managed",
+          "type": "google_compute_network",
+          "name": "main",
+          "provider_config_key": "google",
+          "expressions": {}
+        },
+        {
+          "address": "google_compute_subnetwork.app",
+          "mode": "managed",
+          "type": "google_compute_subnetwork",
+          "name": "app",
+          "provider_config_key": "google",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "google_compute_network.main.id",
+                "google_compute_network.main"
+              ]
+            }
+          }
+        },
+        {
+          "address": "google_compute_instance.app",
+          "mode": "managed",
+          "type": "google_compute_instance",
+          "name": "app",
+          "provider_config_key": "google",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "google_compute_subnetwork.app.id",
+                "google_compute_subnetwork.app"
+              ]
+            }
+          }
+        },
+        {
+          "address": "google_storage_bucket.data",
+          "mode": "managed",
+          "type": "google_storage_bucket",
+          "name": "data",
+          "provider_config_key": "google",
+          "expressions": {}
+        },
+        {
+          "address": "google_sql_database_instance.db",
+          "mode": "managed",
+          "type": "google_sql_database_instance",
+          "name": "db",
+          "provider_config_key": "google",
+          "expressions": {},
+          "depends_on": [
+            "google_compute_network.main"
+          ]
+        }
+      ]
+    }
+  }
+}

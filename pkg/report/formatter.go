@@ -14,6 +14,7 @@ const (
 	FormatMarkdown Format = "markdown"
 	FormatText     Format = "text"
 	FormatJSON     Format = "json"
+	FormatSVG      Format = "svg"
 )
 
 // Formatter generates reports from Terraform plan data.
@@ -30,6 +31,8 @@ func NewFormatter(format Format) (Formatter, error) {
 		return &TextFormatter{}, nil
 	case FormatJSON:
 		return &JSONFormatter{}, nil
+	case FormatSVG:
+		return &SVGFormatter{}, nil
 	default:
 		return nil, fmt.Errorf("unsupported format: %s", format)
 	}
@@ -44,7 +47,9 @@ func ParseFormat(s string) (Format, error) {
 		return FormatText, nil
 	case "json":
 		return FormatJSON, nil
+	case "svg":
+		return FormatSVG, nil
 	default:
-		return "", fmt.Errorf("invalid format: %s (supported: markdown, text, json)", s)
+		return "", fmt.Errorf("invalid format: %s (supported: markdown, text, json, svg)", s)
 	}
 }

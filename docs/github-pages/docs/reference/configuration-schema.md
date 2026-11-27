@@ -57,7 +57,7 @@ Output format for reports.
 **Type:** String
 **Required:** No
 **Default:** `markdown`
-**Valid Values:** `markdown`, `text`, `json`
+**Valid Values:** `markdown`, `text`, `json`, `svg`
 **Example:**
 ```yaml
 output_format: json
@@ -94,7 +94,7 @@ List of actions to include.
 **Type:** Array of strings
 **Required:** No
 **Default:** `[]` (all actions included)
-**Valid Values:** `create`, `update`, `delete`, `replace`
+**Valid Values:** `create`, `update`, `delete`, `replace`, `no-op` (only meaningful for svg)
 **Example:**
 ```yaml
 filters:

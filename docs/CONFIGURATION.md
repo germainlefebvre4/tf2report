@@ -18,7 +18,7 @@
 # Path to Terraform plan JSON file
 terraform_plan_path: terraform.tfplan.json
 
-# Output format: markdown, text, or json
+# Output format: markdown, text, json, or svg
 output_format: markdown
 
 # Filters for resource selection
@@ -51,8 +51,8 @@ verbosity: info
 
 - **Type:** String
 - **Default:** `markdown`
-- **Valid Values:** `markdown`, `text`, `json`
-- **Description:** Format for the generated report
+- **Valid Values:** `markdown`, `text`, `json`, `svg`
+- **Description:** Format for the generated report. `TF2REPORT_OUTPUT_FORMAT=svg` selects the SVG diagram. There is no configuration key or environment variable for `--icons-dir`; it is a flag only.
 
 ### `filters.resource_types`
 
@@ -64,7 +64,7 @@ verbosity: info
 
 - **Type:** Array of strings
 - **Default:** `[]` (no filtering)
-- **Valid Values:** `create`, `update`, `delete`, `replace`
+- **Valid Values:** `create`, `update`, `delete`, `replace`, `no-op` (`no-op` only changes the svg format, which then draws unchanged resources)
 - **Description:** List of actions to include in the report. When empty, all actions are included.
 
 ### `verbosity`

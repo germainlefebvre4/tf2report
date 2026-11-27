@@ -17,6 +17,7 @@ var (
 	resourceTypes []string
 	actions       []string
 	verbose       bool
+	iconsDir      string
 	appVersion    = "dev"
 	buildTime     = "unknown"
 	buildCommit   = "unknown"
@@ -28,7 +29,7 @@ var rootCmd = &cobra.Command{
 	Long: `tf2report analyzes Terraform plan files and generates resource change reports.
 
 It parses Terraform plan JSON files, extracts resource changes, and generates
-summaries in multiple output formats including Markdown, plain text, and JSON.`,
+summaries in multiple output formats including Markdown, plain text, JSON, and SVG.`,
 	RunE:    run,
 	Version: appVersion,
 }
@@ -40,9 +41,10 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file path (default: ./tf2report.yaml)")
 	rootCmd.Flags().StringVarP(&planPath, "plan", "p", "", "path to Terraform plan JSON file")
-	rootCmd.Flags().StringVarP(&outputFormat, "format", "f", "", "output format (markdown, text, json)")
+	rootCmd.Flags().StringVarP(&outputFormat, "format", "f", "", "output format (markdown, text, json, svg)")
 	rootCmd.Flags().StringSliceVarP(&resourceTypes, "type", "t", []string{}, "filter by resource type (can be specified multiple times)")
-	rootCmd.Flags().StringSliceVarP(&actions, "action", "a", []string{}, "filter by action (create, update, delete, replace)")
+	rootCmd.Flags().StringSliceVarP(&actions, "action", "a", []string{}, "filter by action (create, update, delete, replace, no-op)")
+	rootCmd.Flags().StringVar(&iconsDir, "icons-dir", "", "directory of SVG icons for the svg format (read-only, not recursive)")
 	rootCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 }
 
@@ -121,7 +123,7 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 
 	// Create formatter
-	formatter, err := report.NewFormatter(format)
+	formatter, err := newFormatter(format, cfg, iconsDir, verbose, os.Stderr)
 	if err != nil {
 		return err
 	}

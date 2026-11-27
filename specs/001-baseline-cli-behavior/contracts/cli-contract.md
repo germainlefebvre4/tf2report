@@ -19,13 +19,13 @@ No positional arguments are used. The tool reads one plan file and writes one re
 | `--plan` | `-p` | path | Plan JSON file. |
 | `--format` | `-f` | `markdown`, `md`, `text`, `txt`, `json` | Report format. |
 | `--type` | `-t` | resource type, repeatable or comma separated | Keep only these types. |
-| `--action` | `-a` | `create`, `update`, `delete`, `replace`, repeatable | Keep only these actions. |
+| `--action` | `-a` | `create`, `update`, `delete`, `replace`, repeatable (`no-op` also accepted, see below) | Keep only these actions. |
 | `--config` | | path | Explicit configuration file. |
 | `--verbose` | `-v` | none | Sets verbosity to debug and prints progress on standard error. |
 | `--help` | `-h` | none | Usage on standard output, exit 0. |
 | `--version` | | none | Prints `tf2report`, `Version:`, `Commit:`, `Build time:` lines. |
 
-Provisional: an `--action` value outside the four listed is accepted and matches nothing.
+Provisional: an `--action` value outside the four listed is accepted and matches nothing, except `no-op`, which is accepted and matches unchanged resources (the markdown, text and json formats already exclude them, so their output is unchanged; the svg format draws them muted).
 
 ## Configuration file and environment
 
@@ -53,7 +53,7 @@ working directory is read as the configuration.
 | Plan path empty after resolution | empty | message | 1 |
 | Plan file missing | empty | `plan file not found: <path>` | 1 |
 | Plan not valid JSON | empty | `failed to parse plan: ...` | 1 |
-| Unsupported format | empty | `invalid format: <x> (supported: markdown, text, json)` | 1 |
+| Unsupported format | empty | `invalid format: <x> (supported: markdown, text, json, svg)` | 1 |
 
 Provisional: on error, the message is printed twice (once prefixed `Error:` followed by the usage
 text, once alone) on standard error.

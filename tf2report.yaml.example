@@ -4,7 +4,7 @@
 # Path to Terraform plan JSON file
 terraform_plan_path: terraform.tfplan.json
 
-# Output format: markdown, text, or json
+# Output format: markdown, text, json, or svg
 output_format: markdown
 
 # Filters for resource selection

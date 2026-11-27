@@ -8,6 +8,7 @@ This document describes the packages and public APIs in the `tf2report` project 
 github.com/germainlefebvre4/tf2report
 ├── cmd/tf2report          # CLI application entry point
 ├── pkg/config             # Configuration loading
+├── pkg/diagram            # Scene (containers, nodes, edges, layout) for diagrams
 ├── pkg/report             # Report generation and formatting
 └── pkg/terraform          # Terraform plan parsing
 ```
@@ -26,6 +27,7 @@ type Plan struct {
     TerraformVersion string
     ResourceChanges  []ResourceChange
     OutputChanges    map[string]Change
+    Configuration    *Configuration // nil when the plan has no configuration section
 }
 ```
 
@@ -167,6 +169,14 @@ func FilterByAction(changes []ResourceChange, actions []ActionType) []ResourceCh
 
 Filters resource changes by action type.
 
+### Configuration helpers
+
+`Plan.Configuration` holds the optional `configuration` section (module calls, resource references, `depends_on`). `ParseAddress`, `Address.ConfigAddress` and `ParseReference` read resource addresses and references; they never fail.
+
+## pkg/diagram
+
+`diagram.Build(plan, diagram.Options) (*Scene, error)` selects the resources to draw, groups them in provider and module containers, resolves dependency edges and assigns icon families. `diagram.Layout(*Scene)` computes integer coordinates. The Scene carries no attribute value and no rendering knowledge; it imports `pkg/terraform` only.
+
 ## pkg/report
 
 Package `report` provides report formatting functionality.
@@ -182,6 +192,7 @@ const (
     FormatMarkdown Format = "markdown"
     FormatText     Format = "text"
     FormatJSON     Format = "json"
+    FormatSVG      Format = "svg"
 )
 ```
 
@@ -206,6 +217,21 @@ func NewFormatter(format Format) (Formatter, error)
 ```
 
 Creates a formatter based on the specified format.
+
+#### NewSVGFormatter
+
+```go
+type SVGOptions struct {
+    IconsDir       string
+    TypeFiltered   bool
+    ActionFiltered bool
+    OnSkip         func(file, reason string)
+}
+
+func NewSVGFormatter(opts SVGOptions) *SVGFormatter
+```
+
+Creates the SVG formatter with options. `NewFormatter(FormatSVG)` returns one with default options (no icon pack, no filters). `TypeFiltered` and `ActionFiltered` tell which filters the user gave, because they decide no-op visibility and dependency context. `OnSkip` is called for each rejected icon file. An invalid `IconsDir` makes `Format` fail before any output.
 
 #### ParseFormat
 

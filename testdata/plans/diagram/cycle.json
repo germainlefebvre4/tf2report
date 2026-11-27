@@ -1,0 +1,128 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "aws_security_group.a",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-a",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-a"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.b",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "b",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-b",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-b"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.solo",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "solo",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "SYNTHETIC-DIAGRAM-VALUE-solo",
+          "secret": "SYNTHETIC-DIAGRAM-SECRET-solo"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {
+          "secret": true
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_security_group.a",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_security_group.b.id",
+                "aws_security_group.b"
+              ]
+            }
+          }
+        },
+        {
+          "address": "aws_security_group.b",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "b",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "constant_value": "x"
+            },
+            "ref0": {
+              "references": [
+                "aws_security_group.a.id",
+                "aws_security_group.a"
+              ]
+            }
+          }
+        },
+        {
+          "address": "aws_s3_bucket.solo",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "solo",
+          "provider_config_key": "aws",
+          "expressions": {}
+        }
+      ]
+    }
+  }
+}

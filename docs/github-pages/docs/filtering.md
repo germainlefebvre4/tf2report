@@ -133,6 +133,19 @@ tf2report --plan terraform.tfplan.json --action create --action update
 | `update` | Resources being modified in-place | No |
 | `delete` | Resources being removed | Yes |
 | `replace` | Resources being destroyed and recreated | Yes |
+| `no-op` | Unchanged resources (drawn muted by the `svg` format only; other formats exclude them) | No |
+
+## Filtering the SVG Diagram
+
+The svg format decides what to draw from which filters were given:
+
+| `--type` | `--action` | create, update, delete, replace | no-op | Dependency context |
+|----------|------------|---------------------------------|-------|--------------------|
+| not given | not given | all | no | yes, one hop, muted |
+| given | not given | matching types | no | no |
+| any | given | matching, among those left after filtering | only if `no-op` is in the list | no |
+
+Data sources are never drawn, and arrows towards resources that are not drawn are omitted.
 
 ## Combined Filtering
 
