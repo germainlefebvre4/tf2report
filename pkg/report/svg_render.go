@@ -48,18 +48,18 @@ func renderScene(s *diagram.Scene, icons *iconSet) string {
 	return r.b.String()
 }
 
-func (r *renderer) documentSize() (int, int) {
+func (r *renderer) documentSize() (width, height int) {
 	legendW := len(r.scene.Statuses)*legendEntryW + 2*docMargin
 	if len(r.scene.Statuses) > 1 {
 		legendW += (len(r.scene.Statuses) - 1) * legendGap
 	}
-	width := r.scene.Width + 2*docMargin
+	width = r.scene.Width + 2*docMargin
 	for _, v := range []int{legendW, minDocWidth} {
 		if v > width {
 			width = v
 		}
 	}
-	height := docMargin + legendHeight + docMargin + r.scene.Height + docMargin
+	height = docMargin + legendHeight + docMargin + r.scene.Height + docMargin
 	if r.scene.Empty {
 		height += 3 * docMargin
 	}
@@ -113,7 +113,8 @@ func (r *renderer) writeLegend() {
 		r.b.WriteString(`<g transform="translate(` + itoa(x) + ` ` + itoa(docMargin) + `)">`)
 		r.b.WriteString(boxRect(0, 0, 40, 20, style))
 		if style.symbol != "" {
-			r.b.WriteString(`<text x="20" y="14" text-anchor="middle" font-weight="bold" fill="` + style.stroke + `">` + esc(style.symbol) + `</text>`)
+			r.b.WriteString(`<text x="20" y="14" text-anchor="middle" font-weight="bold" fill="` + style.stroke + `">` +
+				esc(style.symbol) + `</text>`)
 		}
 		r.b.WriteString(`<text x="48" y="14" fill="` + colorText + `">` + esc(style.label) + `</text></g>` + "\n")
 		x += legendEntryW + legendGap
@@ -141,7 +142,8 @@ func (r *renderer) writeContainer(c *diagram.Container) {
 	r.b.WriteString(`<g class="container ` + string(c.Kind) + `">` +
 		`<rect x="` + itoa(r.ox+c.X) + `" y="` + itoa(r.oy+c.Y) + `" width="` + itoa(c.W) + `" height="` + itoa(c.H) +
 		`" rx="6" fill="` + fill + `" stroke="` + colorContainer + `" stroke-width="1"/>` +
-		`<text x="` + itoa(r.ox+c.X+8) + `" y="` + itoa(r.oy+c.Y+16) + `" font-weight="bold" fill="` + colorText + `">` + esc(label) + `</text></g>` + "\n")
+		`<text x="` + itoa(r.ox+c.X+8) + `" y="` + itoa(r.oy+c.Y+16) + `" font-weight="bold" fill="` + colorText + `">` +
+		esc(label) + `</text></g>` + "\n")
 	for _, ch := range c.Children {
 		r.writeContainer(ch)
 	}
@@ -214,15 +216,13 @@ func boxRect(x, y, w, h int, s statusStyle) string {
 }
 
 // truncate shortens s to at most max runes, ending with an ellipsis when cut.
-func truncate(s string, max int) string {
-	if max < 1 {
-		max = 1
-	}
-	if utf8.RuneCountInString(s) <= max {
+func truncate(s string, limit int) string {
+	limit = max(limit, 1)
+	if utf8.RuneCountInString(s) <= limit {
 		return s
 	}
 	runes := []rune(s)
-	return string(runes[:max-1]) + "…"
+	return string(runes[:limit-1]) + "…"
 }
 
 func itoa(v int) string { return strconv.Itoa(v) }

@@ -2,6 +2,12 @@ package terraform
 
 import "strings"
 
+// modeData is the mode of a data source address.
+const (
+	modeData      = "data"
+	moduleKeyword = "module"
+)
+
 // ModuleStep is one `module.<name>[<key>]` step of a resource address.
 type ModuleStep struct {
 	Name string
@@ -24,13 +30,13 @@ func ParseAddress(s string) Address {
 	toks := splitAddress(s)
 	var addr Address
 	i := 0
-	for i+1 < len(toks) && toks[i].name == "module" {
+	for i+1 < len(toks) && toks[i].name == moduleKeyword {
 		addr.Modules = append(addr.Modules, ModuleStep{Name: toks[i+1].name, Key: toks[i+1].key})
 		i += 2
 	}
 	addr.Mode = "managed"
-	if i < len(toks) && toks[i].name == "data" {
-		addr.Mode = "data"
+	if i < len(toks) && toks[i].name == modeData {
+		addr.Mode = modeData
 		i++
 	}
 	if i < len(toks) {
@@ -48,10 +54,10 @@ func ParseAddress(s string) Address {
 func (a Address) ConfigAddress() string {
 	var parts []string
 	for _, m := range a.Modules {
-		parts = append(parts, "module", m.Name)
+		parts = append(parts, moduleKeyword, m.Name)
 	}
-	if a.Mode == "data" {
-		parts = append(parts, "data")
+	if a.Mode == modeData {
+		parts = append(parts, modeData)
 	}
 	if a.Type != "" {
 		parts = append(parts, a.Type)

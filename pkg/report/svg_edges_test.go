@@ -16,7 +16,7 @@ func TestSVG_Edges(t *testing.T) {
 	edges := strings.Index(doc, `<g class="edges">`)
 	lastContainer := strings.LastIndex(doc, `<g class="container`)
 	nodes := strings.Index(doc, `<g class="nodes">`)
-	if !(lastContainer < edges && edges < nodes) {
+	if edges < 0 || nodes < 0 || lastContainer >= edges || edges >= nodes {
 		t.Errorf("edges must come after containers and before nodes (%d, %d, %d)", lastContainer, edges, nodes)
 	}
 	group := doc[edges:nodes]
@@ -26,8 +26,8 @@ func TestSVG_Edges(t *testing.T) {
 	if !strings.Contains(doc, `class="node status-noop context"`) {
 		t.Errorf("context node is missing the context class")
 	}
-	ctx := doc[strings.Index(doc, `class="node status-noop context"`):]
-	ctx = ctx[:strings.Index(ctx, "</g>")]
+	_, ctx, _ := strings.Cut(doc, `class="node status-noop context"`)
+	ctx, _, _ = strings.Cut(ctx, "</g>")
 	if strings.Contains(ctx, "font-weight=\"bold\" fill=\"#6e7781\"") {
 		t.Errorf("context node shows a status symbol")
 	}

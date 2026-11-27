@@ -33,7 +33,7 @@ func ParseReference(s string) Reference {
 	}
 	first := toks[0].name
 	switch {
-	case first == "module":
+	case first == moduleKeyword:
 		if len(toks) >= 2 && toks[1].name != "" {
 			return Reference{Kind: RefModule, ModuleCall: toks[1].name}
 		}

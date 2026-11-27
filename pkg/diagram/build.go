@@ -37,8 +37,8 @@ func Build(plan *terraform.Plan, opts Options) (*Scene, error) {
 
 	scene := &Scene{Nodes: nodes, Empty: len(nodes) == 0}
 	scene.Containers = buildContainers(nodes)
-	scene.Edges = append(edges, moduleEdges(relations, byConfig, drawnSet, scene.Containers)...)
-	scene.Edges = finalizeEdges(scene.Edges)
+	allEdges := append([]Edge{}, edges...)
+	scene.Edges = finalizeEdges(append(allEdges, moduleEdges(relations, byConfig, drawnSet, scene.Containers)...))
 	scene.Statuses = presentStatuses(nodes)
 	return scene, nil
 }

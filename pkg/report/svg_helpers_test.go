@@ -1,7 +1,6 @@
 package report
 
 import (
-	"bytes"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
@@ -103,7 +102,8 @@ func legendOf(t *testing.T, doc string) string {
 	}
 	rest := doc[i:]
 	end := len(rest)
-	for _, marker := range []string{`<g class="container`, `<g class="edges">`, `<g class="nodes">`, "</svg>", "No resources to display</text>"} {
+	markers := []string{`<g class="container`, `<g class="edges">`, `<g class="nodes">`, "</svg>", "No resources to display</text>"}
+	for _, marker := range markers {
 		if j := strings.Index(rest, marker); j >= 0 && j < end {
 			end = j
 		}
@@ -125,16 +125,6 @@ func hostilePlan() *terraform.Plan {
 			Change:       terraform.Change{Actions: []string{"create"}},
 		}},
 	}
-}
-
-func marshal(t *testing.T, v any) []byte {
-	t.Helper()
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(v); err != nil {
-		t.Fatalf("encode: %v", err)
-	}
-	return buf.Bytes()
 }
 
 // countNodes counts the node groups of a document.

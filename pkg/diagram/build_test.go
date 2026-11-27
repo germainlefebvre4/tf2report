@@ -38,29 +38,43 @@ func TestBuild_ContainersNestProviderThenModule(t *testing.T) {
 	if len(scene.Containers) != 2 || scene.Containers[0].Label != "aws" || scene.Containers[1].Label != "random" {
 		t.Fatalf("providers = %+v", scene.Containers)
 	}
+	assertContainerTree(t, scene)
+}
+
+// assertContainerTree checks the provider > module instance nesting built for the plan above.
+func assertContainerTree(t *testing.T, scene *Scene) {
+	t.Helper()
+
 	aws := scene.Containers[0]
-	if len(aws.Nodes) != 1 || aws.Nodes[0].Address != "aws_instance.root" {
-		t.Errorf("root-module resource must sit in the provider container: %+v", aws.Nodes)
-	}
-	var labels []string
-	for _, c := range aws.Children {
-		labels = append(labels, c.Label)
-	}
-	if want := []string{"module.app[0]", "module.app[1]"}; !reflect.DeepEqual(labels, want) {
-		t.Errorf("module containers = %v, want %v", labels, want)
-	}
-	if aws.Children[0].Kind != KindModule || aws.Children[0].Path != "module.app[0]" {
-		t.Errorf("module container = %+v", aws.Children[0])
-	}
-	nested := aws.Children[1].Children
-	if len(nested) != 1 || nested[0].Path != "module.app[1].module.db" || nested[0].configPath != "module.app.module.db" {
-		t.Errorf("nested container = %+v", nested)
-	}
-	// a module holding two providers appears under each provider
-	rnd := scene.Containers[1]
-	if len(rnd.Children) != 1 || rnd.Children[0].Label != "module.app[0]" {
-		t.Errorf("random provider modules = %+v", rnd.Children)
-	}
+	t.Run("root module resource sits in the provider container", func(t *testing.T) {
+		if len(aws.Nodes) != 1 || aws.Nodes[0].Address != "aws_instance.root" {
+			t.Errorf("nodes = %+v", aws.Nodes)
+		}
+	})
+	t.Run("module instances are separate containers", func(t *testing.T) {
+		var labels []string
+		for _, c := range aws.Children {
+			labels = append(labels, c.Label)
+		}
+		if want := []string{"module.app[0]", "module.app[1]"}; !reflect.DeepEqual(labels, want) {
+			t.Fatalf("module containers = %v, want %v", labels, want)
+		}
+		if aws.Children[0].Kind != KindModule || aws.Children[0].Path != "module.app[0]" {
+			t.Errorf("module container = %+v", aws.Children[0])
+		}
+	})
+	t.Run("nested module", func(t *testing.T) {
+		nested := aws.Children[1].Children
+		if len(nested) != 1 || nested[0].Path != "module.app[1].module.db" || nested[0].configPath != "module.app.module.db" {
+			t.Errorf("nested container = %+v", nested)
+		}
+	})
+	t.Run("a module holding two providers appears under each", func(t *testing.T) {
+		rnd := scene.Containers[1]
+		if len(rnd.Children) != 1 || rnd.Children[0].Label != "module.app[0]" {
+			t.Errorf("random provider modules = %+v", rnd.Children)
+		}
+	})
 }
 
 func TestBuild_SameNameDifferentModulesNeverCollide(t *testing.T) {

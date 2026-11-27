@@ -56,7 +56,7 @@ func sizeContainer(c *Container, edges []Edge) {
 // arrangeNodes positions the direct nodes relative to the container origin and
 // returns the size of the block they occupy. A container with an edge between two
 // of its direct nodes uses layers; otherwise a regular grid.
-func arrangeNodes(c *Container, edges []Edge) (int, int) {
+func arrangeNodes(c *Container, edges []Edge) (width, height int) {
 	if len(c.Nodes) == 0 {
 		return 0, 0
 	}

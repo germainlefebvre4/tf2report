@@ -1,3 +1,4 @@
+//nolint:goconst // the tables below are data: repeated family ids are clearer as literals
 package diagram
 
 import "strings"

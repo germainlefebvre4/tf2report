@@ -45,7 +45,7 @@ func resolveRelations(cfg *terraform.Configuration) []relation {
 
 func walkModule(mod terraform.ConfigModule, path string, rels *[]relation) {
 	for _, res := range mod.Resources {
-		if res.Mode == "data" {
+		if res.Mode == modeData {
 			continue
 		}
 		from := joinPath(path, res.Type+"."+res.Name)
@@ -73,9 +73,10 @@ func walkModule(mod terraform.ConfigModule, path string, rels *[]relation) {
 // context is allowed, an unchanged target that is not drawn becomes a context
 // node. Edges from or to a delete node, from a node not drawn, and self edges are
 // dropped.
-func resourceEdges(rels []relation, byConfig map[string][]*Node, drawn map[string]bool, allowContext bool) ([]Edge, map[string]bool) {
-	var edges []Edge
-	context := make(map[string]bool)
+func resourceEdges(
+	rels []relation, byConfig map[string][]*Node, drawn map[string]bool, allowContext bool,
+) (edges []Edge, context map[string]bool) {
+	context = make(map[string]bool)
 	for _, r := range rels {
 		if r.toResource == "" {
 			continue
@@ -151,7 +152,7 @@ func holds(c *Container, n *Node) bool {
 	return false
 }
 
-func edgeKey(e Edge) (string, string) {
+func edgeKey(e Edge) (from, to string) {
 	if e.To != nil {
 		return e.From.Address, "0" + e.To.Address
 	}

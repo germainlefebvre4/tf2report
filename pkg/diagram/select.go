@@ -22,9 +22,12 @@ func Select(plan *terraform.Plan, opts Options) []terraform.ResourceChange {
 	return out
 }
 
+// modeData is the mode of a data source resource.
+const modeData = "data"
+
 // drawable reports whether a change can ever be a node (managed, not read).
 func drawable(rc terraform.ResourceChange) bool {
-	return rc.Mode != "data" && rc.Change.GetPrimaryAction() != terraform.ActionRead
+	return rc.Mode != modeData && rc.Change.GetPrimaryAction() != terraform.ActionRead
 }
 
 // statusOf maps the primary action of a change to a Status.

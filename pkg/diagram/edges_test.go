@@ -153,29 +153,7 @@ func TestEdges_ContextNodes(t *testing.T) {
 	}
 	plan := cfgPlan(changes, root)
 
-	t.Run("no filter adds one-hop context once", func(t *testing.T) {
-		s, _ := Build(plan, Options{})
-		vpc := nodeByAddress(s, "aws_vpc.v")
-		if vpc == nil || !vpc.Context {
-			t.Fatalf("vpc must be a context node: %+v", vpc)
-		}
-		if nodeByAddress(s, "aws_route_table.rt") != nil || nodeByAddress(s, "aws_route_table.lonely") != nil {
-			t.Error("context must not be followed, and unreferenced no-op must not be drawn")
-		}
-		want := []string{"aws_subnet.a->aws_vpc.v", "aws_subnet.b->aws_vpc.v"}
-		if got := edgeSet(s); !equalStrings(got, want) {
-			t.Errorf("edges = %v, want %v", got, want)
-		}
-		count := 0
-		for _, n := range s.Nodes {
-			if n.Address == "aws_vpc.v" {
-				count++
-			}
-		}
-		if count != 1 {
-			t.Errorf("vpc drawn %d times", count)
-		}
-	})
+	t.Run("no filter adds one-hop context once", func(t *testing.T) { assertOneHopContext(t, plan) })
 	t.Run("type filter adds no context", func(t *testing.T) {
 		s, _ := Build(plan, Options{TypeFiltered: true})
 		if nodeByAddress(s, "aws_vpc.v") != nil || len(s.Edges) != 0 {
@@ -189,16 +167,48 @@ func TestEdges_ContextNodes(t *testing.T) {
 			t.Errorf("nodes=%d edges=%v", len(s.Nodes), edgeSet(s))
 		}
 	})
-	t.Run("requested no-op is a normal node", func(t *testing.T) {
-		s, _ := Build(plan, Options{ActionFiltered: true})
-		vpc := nodeByAddress(s, "aws_vpc.v")
-		if vpc == nil || vpc.Context || vpc.Status != StatusNoop {
-			t.Fatalf("vpc = %+v", vpc)
+	t.Run("requested no-op is a normal node", func(t *testing.T) { assertRequestedNoop(t, plan) })
+}
+
+// assertOneHopContext checks that an unchanged referenced resource is drawn once as context, with its
+// dependents' edges, and that its own dependencies are not followed.
+func assertOneHopContext(t *testing.T, plan *terraform.Plan) {
+	t.Helper()
+
+	s, _ := Build(plan, Options{})
+	vpc := nodeByAddress(s, "aws_vpc.v")
+	if vpc == nil || !vpc.Context {
+		t.Fatalf("vpc must be a context node: %+v", vpc)
+	}
+	if nodeByAddress(s, "aws_route_table.rt") != nil || nodeByAddress(s, "aws_route_table.lonely") != nil {
+		t.Error("context must not be followed, and unreferenced no-op must not be drawn")
+	}
+	want := []string{"aws_subnet.a->aws_vpc.v", "aws_subnet.b->aws_vpc.v"}
+	if got := edgeSet(s); !equalStrings(got, want) {
+		t.Errorf("edges = %v, want %v", got, want)
+	}
+	count := 0
+	for _, n := range s.Nodes {
+		if n.Address == "aws_vpc.v" {
+			count++
 		}
-		if nodeByAddress(s, "aws_route_table.rt") == nil {
-			t.Error("all no-op resources must be drawn with an action filter")
-		}
-	})
+	}
+	if count != 1 {
+		t.Errorf("vpc drawn %d times", count)
+	}
+}
+
+func assertRequestedNoop(t *testing.T, plan *terraform.Plan) {
+	t.Helper()
+
+	s, _ := Build(plan, Options{ActionFiltered: true})
+	vpc := nodeByAddress(s, "aws_vpc.v")
+	if vpc == nil || vpc.Context || vpc.Status != StatusNoop {
+		t.Fatalf("vpc = %+v", vpc)
+	}
+	if nodeByAddress(s, "aws_route_table.rt") == nil {
+		t.Error("all no-op resources must be drawn with an action filter")
+	}
 }
 
 func TestEdges_FixtureModulesContext(t *testing.T) {
